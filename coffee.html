@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>order digital coffee · bit cafe</title>
+<meta name="description" content="order a joke coffee that isn't real, and get a very real fake receipt for it. segfault espresso, dial-up drip, y2k mocha, and more.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the menu</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html">counter</a></li>
+        <li><a href="articles.html">articles</a></li>
+        <li><a href="coffee.html" aria-current="page">order coffee</a></li>
+        <li><a href="chat.html">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html">webring</a></li>
+        <li><a href="notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head">
+    <p class="counter-intro" data-print>the digital coffee menu. the coffee's still fake — nothing here is brewed, shipped, or worth real money — but the bits are real: earn them fishing, spend them right here.</p>
+
+    <div class="ticket ticket-torn" style="max-width:40rem; margin-left:auto; margin-right:auto;">
+      <div class="ticket-head">
+        <span>bit cafe · coffee counter</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <form id="coffee-form">
+        <ul class="drink-menu">
+          <li class="drink-option">
+            <input type="radio" name="drink" id="d1" data-name="segfault espresso" data-price="2" data-note="a shot so strong your session crashes.">
+            <label class="row" for="d1">
+              <span><span class="drink-name">segfault espresso</span><span class="drink-note">a shot so strong your session crashes.</span></span>
+              <span class="drink-price">2 bits</span>
+            </label>
+          </li>
+          <li class="drink-option">
+            <input type="radio" name="drink" id="d2" data-name="404 roast (not found)" data-price="0" data-note="we're out. we'll bring it anyway.">
+            <label class="row" for="d2">
+              <span><span class="drink-name">404 roast (not found)</span><span class="drink-note">we're out. we'll bring it anyway.</span></span>
+              <span class="drink-price">free</span>
+            </label>
+          </li>
+          <li class="drink-option">
+            <input type="radio" name="drink" id="d3" data-name="dial-up drip" data-price="3" data-note="slow to arrive. comes with a modem screech.">
+            <label class="row" for="d3">
+              <span><span class="drink-name">dial-up drip</span><span class="drink-note">slow to arrive. comes with a modem screech.</span></span>
+              <span class="drink-price">3 bits</span>
+            </label>
+          </li>
+          <li class="drink-option">
+            <input type="radio" name="drink" id="d4" data-name="buffered latte" data-price="2" data-note="smooth, foamy, always loading.">
+            <label class="row" for="d4">
+              <span><span class="drink-name">buffered latte</span><span class="drink-note">smooth, foamy, always loading.</span></span>
+              <span class="drink-price">2 bits</span>
+            </label>
+          </li>
+          <li class="drink-option">
+            <input type="radio" name="drink" id="d5" data-name="y2k mocha" data-price="4" data-note="a nostalgia bomb. may cause minor panic.">
+            <label class="row" for="d5">
+              <span><span class="drink-name">y2k mocha</span><span class="drink-note">a nostalgia bomb. may cause minor panic.</span></span>
+              <span class="drink-price">4 bits</span>
+            </label>
+          </li>
+          <li class="drink-option">
+            <input type="radio" name="drink" id="d6" data-name="decaf.exe" data-price="1" data-note="has stopped responding.">
+            <label class="row" for="d6">
+              <span><span class="drink-name">decaf.exe</span><span class="drink-note">has stopped responding.</span></span>
+              <span class="drink-price">1 bit</span>
+            </label>
+          </li>
+          <li class="drink-option">
+            <input type="radio" name="drink" id="d7" data-name="ctrl+alt+delicious" data-price="3" data-note="the reboot special. tastes like starting over.">
+            <label class="row" for="d7">
+              <span><span class="drink-name">ctrl+alt+delicious</span><span class="drink-note">the reboot special. tastes like starting over.</span></span>
+              <span class="drink-price">3 bits</span>
+            </label>
+          </li>
+        </ul>
+
+        <p class="menu-error hint" hidden>pick something off the menu first: the till needs an order to work with.</p>
+        <p class="bits-error hint" hidden>not enough bits for that yet — <a href="fishing.html">go catch a few more →</a></p>
+        <button id="brew-submit" class="btn btn-red btn-block" type="submit">brew it</button>
+      </form>
+
+      <div id="cup-stage" class="cup-stage" hidden>
+        <canvas id="pixel-cup" class="pixel-cup" width="168" height="168" aria-label="a pixel-art cup of your order, filling and steaming as it brews"></canvas>
+      </div>
+
+      <div id="brew-panel" class="brew-panel" hidden aria-live="polite">
+        <p id="brew-status" class="brew-status">grinding bits…</p>
+        <div id="brew-bar" class="brew-bar-track"><span class="fill"></span></div>
+      </div>
+
+      <div id="receipt-panel" class="receipt-panel" hidden>
+        <hr class="tearline">
+        <div class="ticket-head"><span>receipt</span><span class="stamp small teal">paid*</span></div>
+        <div id="receipt-body"></div>
+        <div class="export-row">
+          <button id="export-jpeg" class="btn" type="button">save as .jpg</button>
+          <button id="export-gif" class="btn btn-teal" type="button">save as .gif</button>
+        </div>
+        <p id="export-status" class="hint" role="status"></p>
+        <button id="order-again" class="btn" type="button">order another →</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>*the bits are real. the coffee is not.</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/pixel-cup.js"></script>
+<script src="js/coffee.js"></script>
+</body>
+</html>

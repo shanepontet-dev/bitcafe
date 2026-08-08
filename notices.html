@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>notice board · bit cafe</title>
+<meta name="description" content="the bit cafe notice board: movie night, house updates, and a spot for visitors to pin their own notices.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the board</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html">counter</a></li>
+        <li><a href="articles.html">articles</a></li>
+        <li><a href="coffee.html">order coffee</a></li>
+        <li><a href="chat.html">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html">webring</a></li>
+        <li><a href="notices.html" aria-current="page">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head">
+    <p class="counter-intro" data-print>the notice board. dot_matrix pins the important stuff up top; the rest of the board is yours: pin your own below.</p>
+
+    <div class="specials-grid corkboard">
+      <article class="ticket ticket-perf-bottom special-stub">
+        <span class="stamp small">new</span>
+        <h3><a href="fishing.html">gone fishin', in the back room</a></h3>
+        <p>an old fishing cabinet turned up behind the router. cast a line, earn bits, spend them at the coffee counter.</p>
+        <a class="btn btn-red" href="fishing.html">go cast a line →</a>
+      </article>
+      <article class="ticket ticket-perf-bottom special-stub">
+        <span class="stamp small">pinned</span>
+        <h3><a href="movie-night.html">movie night at bit cafe</a></h3>
+        <p>dot_matrix is projecting something onto the nearest wall. bring your own popcorn, the till doesn't do snacks yet.</p>
+        <a class="btn btn-red" href="movie-night.html">see what's playing →</a>
+      </article>
+      <article class="ticket ticket-perf-bottom special-stub">
+        <span class="stamp small teal">update</span>
+        <h3><a href="links.html">a real webring, finally</a></h3>
+        <p>hotline webring turned out to be real and still running. dot_matrix hasn't registered bit cafe yet, but you can go look.</p>
+        <a class="btn btn-teal" href="links.html">see the webring page →</a>
+      </article>
+      <article class="ticket ticket-perf-bottom special-stub">
+        <span class="stamp small">new</span>
+        <h3><a href="coffee.html">coffee now brews in pixel-o-vision</a></h3>
+        <p>the order counter got a real animated cup, and you can save it as a .jpg or a .gif on your way out.</p>
+        <a class="btn" href="coffee.html">go order one →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap section-head" aria-labelledby="board-heading">
+    <div class="ticket ticket-torn">
+      <div class="ticket-head">
+        <span id="board-heading">pin your own notice</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <div id="board-offline" class="notice offline" hidden>
+        <strong>the board isn't wired up yet.</strong> this needs the same Supabase project as chat/guestbook connected. if you're the site owner, see <code>README.md</code>, "connecting the till."
+      </div>
+
+      <form id="board-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="board-title">notice title</label>
+            <input type="text" id="board-title" maxlength="60" placeholder="what's the notice about?" required autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="board-postedby">your name (optional)</label>
+            <input type="text" id="board-postedby" maxlength="24" placeholder="how should we credit it?" autocomplete="off">
+          </div>
+        </div>
+        <div class="field">
+          <label for="board-message">the notice itself</label>
+          <textarea id="board-message" maxlength="280" placeholder="event, swap, looking-for-something, whatever belongs on a real board." required></textarea>
+          <span id="board-charcount" class="char-count">0 / 280</span>
+        </div>
+        <div class="field">
+          <label for="board-link">link (optional)</label>
+          <input type="text" id="board-link" maxlength="300" placeholder="https:// (if the notice points somewhere)" autocomplete="off">
+        </div>
+        <button id="board-submit" class="btn btn-red" type="submit">pin it to the board</button>
+      </form>
+
+      <p class="hint">text only, no attachments or images: this is a hobby project with no moderation staff, and open file uploads from strangers are a bigger risk than we're taking on. don't post anything you wouldn't want stapled to a public corkboard forever.</p>
+    </div>
+
+    <div class="section-head">
+      <div class="ticket-head" style="max-width:54rem; margin:0 auto;">
+        <span>the board so far</span>
+        <span>community-pinned</span>
+      </div>
+      <p id="board-empty" class="gb-empty" style="max-width:54rem; margin:var(--space-3) auto 0;" hidden>quiet corner of the board right now. be the first pin.</p>
+      <ul id="board-list" class="gb-list" style="max-width:54rem; margin-left:auto; margin-right:auto;"></ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>best viewed with curiosity</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script type="module" src="js/notices.js"></script>
+</body>
+</html>

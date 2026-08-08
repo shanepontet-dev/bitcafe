@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the webring is not dead, it is just resting · bit cafe</title>
+<meta name="description" content="a small defense of the prev / next / random link at the bottom of a page. a bit cafe article by dot_matrix.">
+<link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the article</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="../index.html">counter</a></li>
+        <li><a href="../articles.html" aria-current="page">articles</a></li>
+        <li><a href="../coffee.html">order coffee</a></li>
+        <li><a href="../chat.html">chatroom</a></li>
+        <li><a href="../guestbook.html">guestbook</a></li>
+        <li><a href="../links.html">webring</a></li>
+        <li><a href="../notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <article class="wrap section-head">
+    <div class="ticket ticket-torn article-ticket">
+      <div class="ticket-head">
+        <span>ticket 02 · articles</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+      <p class="article-meta">
+        <span>jul 18, 2026</span><span>·</span><span>7 min read</span><span>·</span><span>by dot_matrix</span>
+      </p>
+      <h1>the webring is not dead, it is just resting</h1>
+
+      <div class="article-body">
+        <p>If you never used one: a webring was a loop of independent sites, usually about one shared subject or one shared vibe, linked to each other with a little widget at the bottom of the page: a "prev," a "next," sometimes a "random," occasionally a member list that scrolled forever. You'd land on someone's page about lighthouses or Sailor Moon or their cat's medical history, hit "next," and get catapulted to a total stranger's page about a completely different subject, held together only by the fact that both of them had opted into the same ring on purpose.</p>
+
+        <p>No ranking. No relevance score. No engagement optimization deciding you'd probably rather see something else. Just: this person thought you, specifically, having found your way here, might like to see what their neighbor built too.</p>
+
+        <p>That's the part I keep coming back to when people ask why bit cafe bothers having a links page at all when search exists, when everything is theoretically one query away. Search finds you the thing you already knew to ask for. A webring hands you the thing you didn't know existed, vouched for by someone with nothing to gain from the click. Those are not the same kind of finding, and I don't think we've built a good replacement for the second kind; we mostly just stopped doing it, and called the absence progress.</p>
+
+        <blockquote class="pull-stamp">a feed guesses what you want next. a webring just introduces you to a neighbor and gets out of the way.<cite>dot_matrix</cite></blockquote>
+
+        <p>I'll cop to the obvious counterpoint: rings could be terrible. Half the members eventually 404'd. The "random" button had a way of landing on the same three sites. And there was a real, unfixable awkwardness in linking your work next to someone else's without knowing if theirs would still be there in a year. Rings were fragile the way anything made by volunteers with no budget is fragile. That fragility was also, weirdly, part of what made them feel honest: nobody was pretending this was a permanent, professionally maintained index of the internet. It was a bunch of people, holding hands across servers, hoping the chain held.</p>
+
+        <p>bit cafe's <a href="../links.html">webring page</a> isn't a formal ring: I haven't found one worth joining yet that isn't a ghost town or a parody of itself, and I'd rather be honest about that than fake a membership badge. What's there instead is closer to the spirit: real sites I actually visit, credited as the reason this place looks the way it does, linked out generously with nothing tracked and nothing sold. If that's not technically a webring, it's at least fluent in the same language. Consider it resting, not dead. I'd like to think it's just waiting for enough of us to want it back.</p>
+      </div>
+
+      <hr class="tearline">
+      <div class="article-foot">
+        <button class="btn print-btn" onclick="window.print()" type="button">print this ticket</button>
+        <a class="btn btn-red" href="../articles.html">back to the rack →</a>
+      </div>
+    </div>
+  </article>
+
+  <nav class="article-nav" aria-label="more articles">
+    <a class="prev" href="dial-up-eulogy.html"><span class="dir">« previous</span>an autopsy of the modem handshake</a>
+    <a class="next" href="ascii-vs-emoji.html"><span class="dir">next up »</span>ascii vs. emoji: a border skirmish</a>
+  </nav>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="../articles.html">articles</a></li>
+          <li><a href="../coffee.html">order coffee</a></li>
+          <li><a href="../chat.html">chatroom</a></li>
+          <li><a href="../guestbook.html">guestbook</a></li>
+          <li><a href="../links.html">webring</a></li>
+          <li><a href="../notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>best viewed with curiosity</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/common.js"></script>
+</body>
+</html>

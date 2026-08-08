@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>articles · bit cafe</title>
+<meta name="description" content="the bit cafe house zine: short essays on dial-up nostalgia, webrings, ascii art, and late-night chatrooms, written by dot_matrix.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the menu</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html">counter</a></li>
+        <li><a href="articles.html" aria-current="page">articles</a></li>
+        <li><a href="coffee.html">order coffee</a></li>
+        <li><a href="chat.html">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html">webring</a></li>
+        <li><a href="notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap hero-counter">
+    <p class="counter-intro" data-print>the house zine. five slips on the rack today: order whichever one catches your eye, dot_matrix restocks when the mood strikes.</p>
+
+    <div class="ticket ticket-torn" aria-labelledby="menu-heading">
+      <div class="ticket-head">
+        <span id="menu-heading">bit cafe · reading menu</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <ol class="order-board">
+        <li><a class="order-line" href="articles/dial-up-eulogy.html">
+          <span class="no">01</span>
+          <span class="desc">
+            <span class="title">an autopsy of the modem handshake</span>
+            <span class="sub">on the noise that used to mean something was about to happen</span>
+          </span>
+          <span class="price">6 min</span>
+        </a></li>
+        <li><a class="order-line" href="articles/webring-witness.html">
+          <span class="no">02</span>
+          <span class="desc">
+            <span class="title">the webring is not dead, it is just resting</span>
+            <span class="sub">a small defense of the prev / next / random link at the bottom of a page</span>
+          </span>
+          <span class="price">7 min</span>
+        </a></li>
+        <li><a class="order-line" href="articles/ascii-vs-emoji.html">
+          <span class="no">03</span>
+          <span class="desc">
+            <span class="title">ascii vs. emoji: a border skirmish</span>
+            <span class="sub">two ways of drawing a smile, forty years apart, still arguing</span>
+          </span>
+          <span class="price">5 min</span>
+        </a></li>
+        <li><a class="order-line" href="articles/graveyard-shift.html">
+          <span class="no">04</span>
+          <span class="desc">
+            <span class="title">graveyard shift: notes from an empty chatroom at 3am</span>
+            <span class="sub">on the particular quiet of a room with three people in it, all pretending to type</span>
+          </span>
+          <span class="price">4 min</span>
+        </a></li>
+        <li><a class="order-line" href="articles/good-guestbook-entry.html">
+          <span class="no">05</span>
+          <span class="desc">
+            <span class="title">how to leave a good guestbook entry</span>
+            <span class="sub">a short manifesto, and a nudge toward ours</span>
+          </span>
+          <span class="price">4 min</span>
+        </a></li>
+      </ol>
+
+      <hr class="tearline">
+      <p class="hint center">that's the whole rack for now. dot_matrix writes slow and on paper first; new slips get pinned to the counter, not pushed to a feed.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>best viewed with curiosity</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

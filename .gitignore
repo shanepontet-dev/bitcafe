@@ -1,0 +1,8 @@
+# OS cruft
+.DS_Store
+**/.DS_Store
+
+# large local-only media: never committed (GitHub hard-rejects >100MB files
+# anyway, and these two are real movie files pending a decision on how/if
+# movie-night.html gets real video sources in the public deploy)
+media/*.mp4

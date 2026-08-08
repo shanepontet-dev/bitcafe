@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>chatroom · bit cafe</title>
+<meta name="description" content="a live, real-time chatroom: talk to whoever else is in bit cafe right now.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the chatroom</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html">counter</a></li>
+        <li><a href="articles.html">articles</a></li>
+        <li><a href="coffee.html">order coffee</a></li>
+        <li><a href="chat.html" aria-current="page">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html">webring</a></li>
+        <li><a href="notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head">
+    <p class="counter-intro" data-print>the chatroom. real, live, and shared: whatever you type here shows up for everyone else in the room, right now.</p>
+
+    <div class="ticket ticket-torn chat-ticket">
+      <div class="ticket-head">
+        <span>bit cafe · live line</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <div class="chat-toprow">
+        <span id="chat-status" class="status-pill"><span class="led"></span><span class="label">connecting…</span></span>
+        <span id="chat-count" class="chat-count">-- visitors</span>
+      </div>
+
+      <div id="chat-offline" class="notice offline" hidden>
+        <strong>the till isn't wired up yet.</strong> this chatroom needs a free Supabase project connected before messages can send. if you're the site owner, see <code>README.md</code>, "connecting the till."
+      </div>
+
+      <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-label="chat messages">
+        <p id="chat-empty" class="chat-empty" hidden>quiet in here right now. be the first ticket on the tape today.</p>
+      </div>
+
+      <form id="chat-form" class="chat-input-row" aria-label="send a message">
+        <div class="field field-nick">
+          <label for="chat-nick">handle</label>
+          <input type="text" id="chat-nick" maxlength="20" placeholder="anonymous" autocomplete="off">
+        </div>
+        <div class="field field-text">
+          <label for="chat-text">message</label>
+          <input type="text" id="chat-text" maxlength="300" placeholder="say something to the room…" autocomplete="off">
+          <span id="chat-charcount" class="char-count">0 / 300</span>
+        </div>
+        <button id="chat-send" class="btn btn-red" type="submit">print it</button>
+      </form>
+
+      <p class="chat-rules">no accounts, no logins, no moderation bot watching the room: just people, so be the kind of stranger you'd want to share a counter with. messages are public and not private between visitors.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>best viewed with curiosity</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script type="module" src="js/chat.js"></script>
+</body>
+</html>

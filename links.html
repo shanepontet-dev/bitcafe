@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>webring · bit cafe</title>
+<meta name="description" content="the sites that shaped bit cafe, a wall of buttons, a random-link door out into the small web, and a way to request your own site join the wall.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the links</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html">counter</a></li>
+        <li><a href="articles.html">articles</a></li>
+        <li><a href="coffee.html">order coffee</a></li>
+        <li><a href="chat.html">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html" aria-current="page">webring</a></li>
+        <li><a href="notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head">
+    <p class="counter-intro" data-print>the coupon strip. real sites, linked out on purpose, with nothing tracked and nothing sold. read why in <a href="articles/webring-witness.html">the webring is not dead, it is just resting</a>.</p>
+
+    <div class="ticket ticket-perf-bottom">
+      <div class="ticket-head">
+        <span>bit cafe · random door</span>
+        <span>picks from 8</span>
+      </div>
+      <div class="random-link-box">
+        <button id="random-link-btn" class="btn btn-teal" type="button">wander somewhere random →</button>
+        <p id="random-link-status" class="random-link-status" role="status"></p>
+      </div>
+    </div>
+
+    <div class="ticket ticket-torn">
+      <div class="ticket-head">
+        <span>bit cafe · sites we love</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <div class="coupon-strip">
+        <div class="coupon">
+          <h3>melonland</h3>
+          <p>one of the loudest, funniest personal pages left on the internet. glorious chaos, run with real love. this is a lot of where bit cafe's nerve came from.</p>
+          <a class="btn" href="https://melonking.net" target="_blank" rel="noopener">visit melonking.net →</a>
+        </div>
+        <div class="coupon">
+          <h3>ribo.zone</h3>
+          <p>a personal site built like a laboratory: links, drawings, plants, bugs, whatever the owner felt like building that week. their own links page is exactly what a real button wall looks like: go see it firsthand.</p>
+          <a class="btn" href="https://ribo.zone/links" target="_blank" rel="noopener">visit ribo.zone/links →</a>
+        </div>
+        <div class="coupon">
+          <h3>lost letters</h3>
+          <p>a nostalgic tribute to early-2000s online girlhood, built accessible and tracker-free on purpose. proof that "indie" and "considerate" were never in tension.</p>
+          <a class="btn" href="https://lostletters.neocities.org" target="_blank" rel="noopener">visit lostletters →</a>
+        </div>
+        <div class="coupon">
+          <h3>neocities</h3>
+          <p>free, ad-free hosting for pages like this one. if any of this made you want to build your own corner of the web, this is where you'd actually start.</p>
+          <a class="btn" href="https://neocities.org" target="_blank" rel="noopener">visit neocities.org →</a>
+        </div>
+        <div class="coupon">
+          <h3>indieweb wiki</h3>
+          <p>a community wiki for people building small, self-owned sites instead of renting space on somebody else's platform. dense, useful, unglamorous in the best way.</p>
+          <a class="btn" href="https://indieweb.org" target="_blank" rel="noopener">visit indieweb.org →</a>
+        </div>
+        <div class="coupon">
+          <h3>hotline webring</h3>
+          <p>an actual, currently running webring, not a directory pretending to be one: pick a slug, add a next/previous link, get pulled into the chain for real. this is the one from the note below.</p>
+          <a class="btn btn-red" href="https://hotlinewebring.club" target="_blank" rel="noopener">visit hotlinewebring.club →</a>
+        </div>
+      </div>
+
+      <hr class="tearline">
+      <p class="hint">update: found one. <a href="https://hotlinewebring.club" target="_blank" rel="noopener">hotline webring</a> is real, active, and actually joinable: dot_matrix just hasn't gotten around to registering bit cafe yet. know an even better one? <a href="guestbook.html">tell us in the guestbook</a>.</p>
+    </div>
+  </section>
+
+  <section class="wrap section-head" aria-labelledby="wall-heading">
+    <div class="ticket ticket-torn">
+      <div class="ticket-head">
+        <span id="wall-heading">bit cafe · the button wall</span>
+        <span>8 doors</span>
+      </div>
+      <p class="hint mt-0">hand-made badges, each one its own color, layout and little animated icon, the way a real button wall looks: not the sites' own art (we don't have their files, and wouldn't reuse them without asking), just tribute buttons bit cafe drew and animated itself. every one of them actually goes there.</p>
+      <ul class="button-wall">
+        <li><a href="https://melonking.net" target="_blank" rel="noopener"><span class="badge-embed" data-badge="melonland" data-label="melonland · visit melonking.net"></span></a></li>
+        <li><a href="https://ribo.zone/links" target="_blank" rel="noopener"><span class="badge-embed" data-badge="ribo" data-label="ribo.zone · visit ribo.zone/links"></span></a></li>
+        <li><a href="https://lostletters.neocities.org" target="_blank" rel="noopener"><span class="badge-embed" data-badge="lostletters" data-label="lost letters · visit lostletters.neocities.org"></span></a></li>
+        <li><a href="https://neocities.org" target="_blank" rel="noopener"><span class="badge-embed" data-badge="neocities" data-label="neocities · visit neocities.org"></span></a></li>
+        <li><a href="https://hotlinewebring.club" target="_blank" rel="noopener"><span class="badge-embed" data-badge="hotlinewebring" data-label="hotline webring · visit hotlinewebring.club"></span></a></li>
+        <li><a href="https://indieweb.org" target="_blank" rel="noopener"><span class="badge-embed" data-badge="indieweb" data-label="indieweb wiki · visit indieweb.org"></span></a></li>
+        <li><a href="https://wiby.me" target="_blank" rel="noopener"><span class="badge-embed" data-badge="wiby" data-label="wiby · visit wiby.me"></span></a></li>
+        <li><a href="https://indieseek.xyz" target="_blank" rel="noopener"><span class="badge-embed" data-badge="indieseek" data-label="indieseek · visit indieseek.xyz"></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap section-head" aria-labelledby="submit-heading">
+    <div class="ticket ticket-torn">
+      <div class="ticket-head">
+        <span id="submit-heading">request a spot on the wall</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+      <p class="hint mt-0">got a site that belongs here? file a request and dot_matrix will read it by hand. this doesn't publish automatically: real fits get added to the wall manually, the same reason bit cafe won't auto-join a formal ring above.</p>
+
+      <div id="submit-offline" class="notice offline" hidden>
+        <strong>the request drawer isn't wired up yet.</strong> this form uses the same Supabase project as chat/guestbook. if you're the site owner, see <code>README.md</code>, "connecting the till."
+      </div>
+
+      <form id="submit-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="site-name">site name</label>
+            <input type="text" id="site-name" name="site-name" maxlength="60" required>
+          </div>
+          <div class="field">
+            <label for="site-url">url</label>
+            <input type="text" id="site-url" name="site-url" maxlength="300" placeholder="https://" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="site-pitch">why it belongs on the wall</label>
+          <textarea id="site-pitch" name="site-pitch" maxlength="240" required></textarea>
+        </div>
+        <div class="field">
+          <label for="site-contact">contact (optional)</label>
+          <input type="text" id="site-contact" name="site-contact" maxlength="120" placeholder="email, handle, whatever works">
+        </div>
+        <button id="submit-btn" class="btn btn-red" type="submit">file the request</button>
+      </form>
+
+      <div id="submit-confirm" class="notice" hidden>
+        <strong>ticket filed.</strong> it's in the drawer for dot_matrix to read by hand. no promises on timing: this place runs on one person and a browser tab.
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section-head" aria-labelledby="badge-heading">
+    <div class="ticket about-counter">
+      <div class="ticket-head"><span id="badge-heading">grab our button</span><span>88 × 31</span></div>
+      <div class="badge-grabber">
+        <img src="img/badge-88x31.svg" width="88" height="31" alt="bit cafe, an 88 by 31 pixel button badge, black border, red status dot">
+        <div class="badge-code">
+          <label for="badge-snippet">link back to us, the old-fashioned way</label>
+          <textarea id="badge-snippet" readonly rows="3" onclick="this.select()">&lt;a href="https://example.com/bitcafe/"&gt;&lt;img src="badge-88x31.svg" width="88" height="31" alt="bit cafe"&gt;&lt;/a&gt;</textarea>
+          <p class="hint">swap the href for wherever you end up hosting this site, save the badge image alongside your page, and it's yours. click the code to select it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>best viewed with curiosity</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/badges.js"></script>
+<script type="module" src="js/webring.js"></script>
+</body>
+</html>

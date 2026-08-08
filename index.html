@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bit cafe · an internet café for the terminally online</title>
+<meta name="description" content="bit cafe: read the house zine, order a joke coffee, talk live in the chatroom, and sign the guestbook on your way out. run by dot_matrix, one page at a time.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--
+THESIS: bit cafe is a register-tape ritual, not a hacker terminal or a cozy
+coffee brand: every room in the café is something you order, and it prints.
+OWN-WORLD: cool pale dot-matrix/greenbar paper, near-black ink, duplicate-
+ribbon red + rubber-stamp teal; Martian Mono for chrome/numerals, Courier
+Prime for reading copy; torn edges, perforation and ink-stamp texture as
+the only ornament: no gradients, no glass, no rounded cards.
+STORY: visitor walks up to the counter, takes a number, and orders their way
+through the café: reads articles as printed slips, orders a joke coffee for
+a fake receipt, joins the live chat ticker, signs the guestbook as a stamped
+entry, wanders the webring as a coupon strip, and leaves knowing dot_matrix
+actually runs this place.
+FIRST VIEWPORT: masthead counter bar, then one large printing order-board
+ticket listing the five rooms as numbered menu lines, with a live ticket
+number and a take-a-number framing.
+FORM: Thermal Receipt / Order Counter, position 3 of 7 on the ranked list,
+seed key a49b1605.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the
+finish review, the verdict, and DESIGN.md.
+-->
+<a class="skip-link" href="#main">skip to the counter</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html" aria-current="page">counter</a></li>
+        <li><a href="articles.html">articles</a></li>
+        <li><a href="coffee.html">order coffee</a></li>
+        <li><a href="chat.html">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html">webring</a></li>
+        <li><a href="notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap hero-counter">
+    <p class="counter-intro" data-print>welcome in. wipe your feet, the mouse mat's seen better decades. pull a number and order your way through the place…</p>
+
+    <div class="ticket ticket-torn" aria-labelledby="board-heading">
+      <div class="ticket-head">
+        <span id="board-heading">bit cafe · order board</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <ol class="order-board">
+        <li><a class="order-line" href="articles.html">
+          <span class="no">01</span>
+          <span class="desc">
+            <span class="title">articles</span>
+            <span class="sub">the house zine: dial-up eulogies, webring sermons, 3am chat logs</span>
+          </span>
+          <span class="price">read →</span>
+        </a></li>
+        <li><a class="order-line" href="coffee.html">
+          <span class="no">02</span>
+          <span class="desc">
+            <span class="title">order digital coffee</span>
+            <span class="sub">segfault espresso, dial-up drip, y2k mocha; none of it is real, all of it helps</span>
+          </span>
+          <span class="price">order →</span>
+        </a></li>
+        <li><a class="order-line" href="chat.html">
+          <span class="no">03</span>
+          <span class="desc">
+            <span class="title">chatroom</span>
+            <span class="sub">a live ticker: whoever else is in the café right now, talking in real time</span>
+          </span>
+          <span class="price">live →</span>
+        </a></li>
+        <li><a class="order-line" href="guestbook.html">
+          <span class="no">04</span>
+          <span class="desc">
+            <span class="title">guestbook</span>
+            <span class="sub">sign the ledger: every entry gets stamped and kept on the spike</span>
+          </span>
+          <span class="price">sign →</span>
+        </a></li>
+        <li><a class="order-line" href="links.html">
+          <span class="no">05</span>
+          <span class="desc">
+            <span class="title">webring</span>
+            <span class="sub">the sites that shaped this place, plus coupons out to the rest of the small web</span>
+          </span>
+          <span class="price">wander →</span>
+        </a></li>
+      </ol>
+
+      <hr class="tearline">
+      <div class="ticket-close">
+        <svg class="barcode" viewBox="0 0 220 34" role="img" aria-label="not a real barcode, just ambiance">
+          <rect x="0" y="0" width="3" height="34"/><rect x="6" y="0" width="1" height="34"/>
+          <rect x="10" y="0" width="2" height="34"/><rect x="15" y="0" width="4" height="34"/>
+          <rect x="22" y="0" width="1" height="34"/><rect x="26" y="0" width="3" height="34"/>
+          <rect x="32" y="0" width="1" height="34"/><rect x="36" y="0" width="2" height="34"/>
+          <rect x="41" y="0" width="5" height="34"/><rect x="49" y="0" width="1" height="34"/>
+          <rect x="53" y="0" width="2" height="34"/><rect x="58" y="0" width="1" height="34"/>
+          <rect x="62" y="0" width="4" height="34"/><rect x="69" y="0" width="2" height="34"/>
+          <rect x="74" y="0" width="1" height="34"/><rect x="78" y="0" width="3" height="34"/>
+          <rect x="84" y="0" width="1" height="34"/><rect x="88" y="0" width="2" height="34"/>
+          <rect x="93" y="0" width="1" height="34"/><rect x="97" y="0" width="5" height="34"/>
+          <rect x="105" y="0" width="1" height="34"/><rect x="109" y="0" width="2" height="34"/>
+          <rect x="114" y="0" width="4" height="34"/><rect x="121" y="0" width="1" height="34"/>
+          <rect x="125" y="0" width="1" height="34"/><rect x="129" y="0" width="3" height="34"/>
+          <rect x="135" y="0" width="2" height="34"/><rect x="140" y="0" width="1" height="34"/>
+          <rect x="144" y="0" width="4" height="34"/><rect x="151" y="0" width="1" height="34"/>
+          <rect x="155" y="0" width="2" height="34"/><rect x="160" y="0" width="1" height="34"/>
+          <rect x="164" y="0" width="3" height="34"/><rect x="170" y="0" width="1" height="34"/>
+          <rect x="174" y="0" width="5" height="34"/><rect x="182" y="0" width="1" height="34"/>
+          <rect x="186" y="0" width="2" height="34"/><rect x="191" y="0" width="1" height="34"/>
+          <rect x="195" y="0" width="3" height="34"/><rect x="201" y="0" width="1" height="34"/>
+          <rect x="205" y="0" width="2" height="34"/><rect x="210" y="0" width="4" height="34"/>
+          <rect x="217" y="0" width="1" height="34"/>
+        </svg>
+        <p class="hint center">thank you for stopping by. come back any hour, we never close.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section-head">
+    <h2 class="specials-heading">today's specials</h2>
+    <div class="specials-grid">
+      <article class="ticket ticket-perf-bottom special-stub">
+        <span class="stamp small corner">fresh</span>
+        <h3><a href="articles/graveyard-shift.html">graveyard shift: notes from an empty chatroom at 3am</a></h3>
+        <p>on the particular quiet of a room with three people in it, all pretending to type.</p>
+        <a class="btn" href="articles/graveyard-shift.html">order this read →</a>
+      </article>
+      <article class="ticket ticket-perf-bottom special-stub">
+        <span class="stamp small teal corner">new</span>
+        <h3><a href="coffee.html">dial-up drip</a></h3>
+        <p>slow to arrive. worth the wait. comes with a modem screech, no refunds on nostalgia.</p>
+        <a class="btn btn-red" href="coffee.html">order it →</a>
+      </article>
+      <article class="ticket ticket-perf-bottom special-stub">
+        <span class="stamp small corner">new</span>
+        <h3><a href="fishing.html">gone fishin'</a></h3>
+        <p>an old cabinet behind the router pays out real bits for fake fish. spend them at the coffee counter.</p>
+        <a class="btn" href="fishing.html">cast a line →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap section-head" aria-labelledby="about-heading">
+    <div class="ticket about-counter">
+      <div class="ticket-head"><span>who's behind the counter</span><span>staff ID 001</span></div>
+      <div class="about-grid">
+        <div class="badge" aria-hidden="true">
+          <svg class="badge-photo" viewBox="0 0 60 60" role="img" aria-label="no photo on file. dot_matrix prefers it that way">
+            <rect width="60" height="60" fill="var(--paper-2)"/>
+            <circle cx="10" cy="10" r="3" fill="var(--ink)"/><circle cx="20" cy="10" r="3" fill="var(--ink)" opacity=".3"/><circle cx="30" cy="10" r="3" fill="var(--ink)" opacity=".7"/><circle cx="40" cy="10" r="3" fill="var(--ink)" opacity=".15"/><circle cx="50" cy="10" r="3" fill="var(--ink)" opacity=".5"/>
+            <circle cx="10" cy="20" r="3" fill="var(--ink)" opacity=".5"/><circle cx="20" cy="20" r="3" fill="var(--ink)" opacity=".8"/><circle cx="30" cy="20" r="3" fill="var(--ink)" opacity=".2"/><circle cx="40" cy="20" r="3" fill="var(--ink)" opacity=".6"/><circle cx="50" cy="20" r="3" fill="var(--ink)" opacity=".25"/>
+            <circle cx="10" cy="30" r="3" fill="var(--ink)" opacity=".2"/><circle cx="20" cy="30" r="3" fill="var(--ink)" opacity=".6"/><circle cx="30" cy="30" r="3" fill="var(--ink)" opacity=".9"/><circle cx="40" cy="30" r="3" fill="var(--ink)" opacity=".7"/><circle cx="50" cy="30" r="3" fill="var(--ink)" opacity=".1"/>
+            <circle cx="10" cy="40" r="3" fill="var(--ink)" opacity=".65"/><circle cx="20" cy="40" r="3" fill="var(--ink)" opacity=".1"/><circle cx="30" cy="40" r="3" fill="var(--ink)" opacity=".5"/><circle cx="40" cy="40" r="3" fill="var(--ink)" opacity=".35"/><circle cx="50" cy="40" r="3" fill="var(--ink)" opacity=".75"/>
+            <circle cx="10" cy="50" r="3" fill="var(--ink)" opacity=".3"/><circle cx="20" cy="50" r="3" fill="var(--ink)" opacity=".55"/><circle cx="30" cy="50" r="3" fill="var(--ink)" opacity=".15"/><circle cx="40" cy="50" r="3" fill="var(--ink)" opacity=".8"/><circle cx="50" cy="50" r="3" fill="var(--ink)" opacity=".4"/>
+          </svg>
+          <span class="badge-name">dot_matrix</span>
+          <span class="badge-role">proprietor</span>
+        </div>
+        <div class="about-copy">
+          <p>bit cafe is run out of one browser tab by <strong>dot_matrix</strong>, no last name given, no last name needed, the same way half the internet used to work. they write the articles, stamp the guestbook, and personally guarantee none of the coffee is real.</p>
+          <p>the till is open to whoever wanders in. there's no login, no algorithm deciding what you see, and no data being sold out the back door: just pages, printed one at a time, the way the good ones used to be.</p>
+          <a class="btn btn-teal" href="articles.html">read the zine →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section-head" aria-labelledby="doors-heading">
+    <div class="ticket ticket-perf-bottom">
+      <div class="ticket-head"><span id="doors-heading">a few doors out</span><span>webring →</span></div>
+      <ul class="button-wall">
+        <li><a href="https://melonking.net" target="_blank" rel="noopener"><span class="badge-embed" data-badge="melonland" data-label="melonland · visit melonking.net"></span></a></li>
+        <li><a href="https://ribo.zone/links" target="_blank" rel="noopener"><span class="badge-embed" data-badge="ribo" data-label="ribo.zone · visit ribo.zone/links"></span></a></li>
+        <li><a href="https://lostletters.neocities.org" target="_blank" rel="noopener"><span class="badge-embed" data-badge="lostletters" data-label="lost letters · visit lostletters.neocities.org"></span></a></li>
+        <li><a href="https://neocities.org" target="_blank" rel="noopener"><span class="badge-embed" data-badge="neocities" data-label="neocities · visit neocities.org"></span></a></li>
+      </ul>
+      <div class="random-link-box" style="margin-top: var(--space-4);">
+        <button id="random-link-btn" class="btn btn-teal" type="button">wander somewhere random →</button>
+        <p id="random-link-status" class="random-link-status" role="status"></p>
+      </div>
+      <p class="hint" style="margin-top: var(--space-4);">that's four of eight. <a href="links.html">see the whole wall, and the rest of the webring →</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>best viewed with curiosity</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/badges.js"></script>
+<script type="module" src="js/webring.js"></script>
+</body>
+</html>

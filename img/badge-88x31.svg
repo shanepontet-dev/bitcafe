@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31">
+  <rect width="88" height="31" fill="#eef1e5"/>
+  <rect x="1" y="1" width="86" height="29" fill="none" stroke="#201f19" stroke-width="2"/>
+  <rect x="1" y="1" width="86" height="9" fill="#201f19"/>
+  <text x="6" y="8" font-family="monospace" font-size="7" font-weight="700" fill="#eef1e5" letter-spacing="0.5">BIT · CAFE</text>
+  <text x="6" y="22" font-family="monospace" font-size="6.5" fill="#4b4a3f">est. always</text>
+  <circle cx="78" cy="19" r="3" fill="#b31f28"/>
+</svg>

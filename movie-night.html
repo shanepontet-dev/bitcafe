@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>movie night · bit cafe</title>
+<meta name="description" content="movie night at bit cafe: whatever dot_matrix is projecting this week.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the screening</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html">counter</a></li>
+        <li><a href="articles.html">articles</a></li>
+        <li><a href="coffee.html">order coffee</a></li>
+        <li><a href="chat.html">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html">webring</a></li>
+        <li><a href="notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head">
+    <p class="counter-intro" data-print>movie night. dot_matrix picked a couple of things and isn't saying what until the lights go down.</p>
+
+    <!-- each screening is self-contained: drop a new .ticket block above/below
+         this one, point its <video data-src> at a new file in media/, and
+         js/movie-night.js picks it up automatically — no script changes
+         needed to add a third. -->
+
+    <div class="ticket ticket-torn" style="max-width:50rem; margin-left:auto; margin-right:auto;">
+      <div class="ticket-head">
+        <span>now screening: Donnie Darko (2001)</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <div class="screening-row">
+        <div class="screening-col">
+          <div class="screening-frame">
+            <video class="screening-video" data-src="media/donnie-darko.mp4" controls loop hidden></video>
+            <div class="notice offline">
+              <strong>the reel hasn't been loaded yet.</strong> dot_matrix will drop the file in before showtime; check back soon.
+            </div>
+          </div>
+          <div class="screening-controls" hidden>
+            <button type="button" class="btn" data-skip="-30">« 30s</button>
+            <button type="button" class="btn" data-skip="30">30s »</button>
+            <button type="button" class="btn btn-teal" data-speed-btn>1×</button>
+          </div>
+        </div>
+
+        <div class="poster-frame">
+          <img class="poster-img" src="img/donnie-darko-poster.jpg" width="220" height="330" alt="the poster for donnie darko, tacked up by the door">
+          <dl class="movie-stats">
+            <div class="movie-stat"><dt>rating</dt><dd>8.0/10 <span class="stat-source">IMDb</span></dd></div>
+            <div class="movie-stat"><dt>director</dt><dd>Richard Kelly</dd></div>
+            <div class="movie-stat"><dt>writer</dt><dd>Richard Kelly</dd></div>
+            <div class="movie-stat"><dt>stars</dt><dd>Jake Gyllenhaal, Jena Malone, Patrick Swayze</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <hr class="tearline">
+      <p>a stranger in a rotting rabbit suit tells a sleepwalking teenager that the world ends in 28 days, then a jet engine crashes into his bedroom with no explanation. what follows might be a breakdown, might be a time loop, all of it set to a note-perfect '80s soundtrack.</p>
+    </div>
+
+    <div class="ticket ticket-torn" style="max-width:50rem; margin-left:auto; margin-right:auto;">
+      <div class="ticket-head">
+        <span>now screening: Zodiac (2007)</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <div class="screening-row">
+        <div class="screening-col">
+          <div class="screening-frame">
+            <video class="screening-video" data-src="media/zodiac.mp4" controls loop hidden></video>
+            <div class="notice offline">
+              <strong>the reel hasn't been loaded yet.</strong> dot_matrix will drop the file in before showtime; check back soon.
+            </div>
+          </div>
+          <div class="screening-controls" hidden>
+            <button type="button" class="btn" data-skip="-30">« 30s</button>
+            <button type="button" class="btn" data-skip="30">30s »</button>
+            <button type="button" class="btn btn-teal" data-speed-btn>1×</button>
+          </div>
+        </div>
+
+        <div class="poster-frame">
+          <img class="poster-img" src="img/zodiac-poster.jpg" width="260" height="382" alt="the poster for tonight's screening, tacked up by the door">
+          <dl class="movie-stats">
+            <div class="movie-stat"><dt>rating</dt><dd>7.7/10 <span class="stat-source">IMDb</span></dd></div>
+            <div class="movie-stat"><dt>director</dt><dd>David Fincher</dd></div>
+            <div class="movie-stat"><dt>writer</dt><dd>James Vanderbilt</dd></div>
+            <div class="movie-stat"><dt>stars</dt><dd>Jake Gyllenhaal, Mark Ruffalo, Robert Downey Jr.</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <hr class="tearline">
+      <p>in the late 1960s and '70s, a serial killer taunts the San Francisco Bay Area press with cipher letters and cryptic threats. a cartoonist becomes obsessed with cracking a case that outlasted the cops assigned to solve it.</p>
+    </div>
+
+    <p class="center" style="margin-top:var(--space-6);"><a class="btn" href="notices.html">back to the board →</a></p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>best viewed with curiosity</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by dot_matrix, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/movie-night.js"></script>
+</body>
+</html>
