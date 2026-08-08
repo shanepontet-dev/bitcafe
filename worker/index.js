@@ -26,6 +26,7 @@ import * as logout from "../functions/api/admin/logout.js";
 import * as articlesIndex from "../functions/api/admin/articles/index.js";
 import * as articlesId from "../functions/api/admin/articles/[id].js";
 import * as moviesIndex from "../functions/api/admin/movies/index.js";
+import * as moviesImdbLookup from "../functions/api/admin/movies/imdb-lookup.js";
 import * as moviesId from "../functions/api/admin/movies/[id].js";
 import * as submissionsIndex from "../functions/api/admin/submissions/index.js";
 import * as submissionsId from "../functions/api/admin/submissions/[id].js";
@@ -76,6 +77,9 @@ export default {
     if (path === "/api/admin/movies") {
       if (method === "GET") return moviesIndex.onRequestGet(context);
       if (method === "POST") return moviesIndex.onRequestPost(context);
+    }
+    if (path === "/api/admin/movies/imdb-lookup" && method === "GET") {
+      return moviesImdbLookup.onRequestGet(context);
     }
     m = path.match(/^\/api\/admin\/movies\/([^/]+)$/);
     if (m) {

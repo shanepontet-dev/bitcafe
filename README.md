@@ -109,9 +109,14 @@ entry.
 render at `article.html?slug=...`, replacing what used to be 5 separate
 hand-written files under `articles/`), read and dismiss webring "request
 a spot" pitches (`site_submissions` — previously only visible in the
-Supabase Table Editor), and add or delete movie night's screenings,
-including the video file itself. deleting a screening also deletes its
-files from R2, which is the whole point: the free tier caps out at
+Supabase Table Editor), and add, reorder, or delete movie night's
+screenings, including the video file itself. a screening's video can
+either be uploaded (the usual case) or just linked to a direct file URL
+hosted somewhere else — either way, pasting an IMDb link into the movie
+form fills in title/year/rating/director/writer/stars/synopsis/poster
+for you (via [OMDb](https://omdbapi.com), see the secrets table below).
+deleting a screening also deletes its files from R2, which is the whole
+point for uploaded video: the free tier caps out at
 10GB, and the dashboard shows you how close you are before every
 upload.
 
@@ -170,6 +175,7 @@ actual endpoint logic.
    | `R2_SECRET_ACCESS_KEY` | from step 2 |
    | `R2_BUCKET_NAME` | from step 1 |
    | `R2_PUBLIC_BASE_URL` | the `https://pub-<hash>.r2.dev` origin your bucket already serves from (everything before the filename in the video URLs on `movie-night.html` today) |
+   | `OMDB_API_KEY` | optional — powers the "fill in from IMDb" button on the movie form. free at [omdbapi.com/apikey.aspx](https://www.omdbapi.com/apikey.aspx) (1,000 requests/day). skip it and that button just shows an error; everything else in `/admin` works without it |
 
 5. **run the database migrations** — see "connecting the till" above
    (`002_articles_movies.sql`, then optionally `003_seed_content.sql`).
