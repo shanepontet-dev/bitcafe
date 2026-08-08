@@ -115,6 +115,9 @@ if (els.list) {
         els.dropPreview.hidden = false;
         els.dropHint.textContent = "got it — check the fields below before saving.";
       },
+      onNoImage: function () {
+        els.dropHint.textContent = "couldn't find an image in that — try saving it and choosing the file instead.";
+      },
       fetchFromUrl: async function (url) {
         els.dropHint.textContent = "fetching that image…";
         try {
