@@ -64,9 +64,19 @@
     return n;
   }
 
-  document.querySelectorAll("[data-ticket-number]").forEach(function (el) {
-    el.textContent = "№ " + nextTicketNumber();
-  });
+  // exposed on window.bitcafe (below) so pages that inject new
+  // [data-ticket-number] tickets after load -- movie night's screenings,
+  // fetched from Supabase instead of present in the static markup --
+  // can stamp just the new ones. only touches elements still showing
+  // the unstamped placeholder, so calling it again after the initial
+  // page-load pass never re-numbers an already-stamped ticket.
+  function stampTicketNumbers(root) {
+    (root || document).querySelectorAll("[data-ticket-number]").forEach(function (el) {
+      if (el.textContent.trim() !== "№ ----") return;
+      el.textContent = "№ " + nextTicketNumber();
+    });
+  }
+  stampTicketNumbers();
 
   // ---- bits: the house currency ---------------------------------------
   // earned by fishing (fishing.html), spent at the coffee counter
@@ -118,6 +128,7 @@
   window.bitcafe = window.bitcafe || {};
   window.bitcafe.prefersReducedMotion = prefersReducedMotion;
   window.bitcafe.pad = pad;
+  window.bitcafe.stampTicketNumbers = stampTicketNumbers;
   window.bitcafe.getBits = function () { return readBits(); };
   window.bitcafe.addBits = function (n) {
     var next = writeBits(readBits() + Math.max(0, Math.round(n)));

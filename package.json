@@ -1,0 +1,8 @@
+{
+  "name": "bitcafe-admin-functions",
+  "private": true,
+  "description": "The only npm dependency in this repo: aws4fetch, used by the /admin backend's Cloudflare Pages Functions to sign presigned R2 upload URLs. The public site itself is still plain HTML/CSS/JS with no build step -- this package.json exists purely so Cloudflare's Pages build can npm-install before bundling /functions.",
+  "dependencies": {
+    "aws4fetch": "^1.0.20"
+  }
+}

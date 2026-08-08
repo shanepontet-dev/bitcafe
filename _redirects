@@ -1,0 +1,9 @@
+# bit cafe: legacy article URLs -> the new article.html?slug= template
+# (see README.md, "the reading menu goes dynamic"). Cloudflare Pages
+# reads this file at the repo root and serves it before falling back
+# to static assets -- https://developers.cloudflare.com/pages/configuration/redirects/
+/articles/ascii-vs-emoji.html        /article.html?slug=ascii-vs-emoji        301
+/articles/dial-up-eulogy.html        /article.html?slug=dial-up-eulogy        301
+/articles/good-guestbook-entry.html  /article.html?slug=good-guestbook-entry  301
+/articles/graveyard-shift.html       /article.html?slug=graveyard-shift       301
+/articles/webring-witness.html       /article.html?slug=webring-witness       301
