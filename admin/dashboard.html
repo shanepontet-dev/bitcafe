@@ -38,11 +38,11 @@
 
 <main id="main">
   <section class="wrap section-head">
-    <p class="counter-intro" data-print>everything that runs the site, in one place: write an article, check the wall requests, swap what's playing at movie night.</p>
+    <p class="counter-intro" data-print>everything that runs the site, in one place: write an article, manage the webring's sites and button wall, swap what's playing at movie night.</p>
 
     <nav class="admin-tabs" aria-label="admin sections">
       <button class="btn is-active" data-tab="articles" type="button">articles</button>
-      <button class="btn" data-tab="submissions" type="button">wall requests</button>
+      <button class="btn" data-tab="webring" type="button">webring</button>
       <button class="btn" data-tab="movies" type="button">movie night</button>
     </nav>
 
@@ -115,14 +115,115 @@
       </div>
     </section>
 
-    <section id="panel-submissions" class="admin-panel" hidden>
+    <section id="panel-webring" class="admin-panel" hidden>
+      <div class="ticket ticket-torn">
+        <div class="ticket-head">
+          <span>sites we love</span>
+          <span id="featured-count">-- sites</span>
+        </div>
+
+        <div id="featured-offline" class="notice offline" hidden></div>
+        <p class="hint">the coupon strip at the top of <code>links.html</code>. the page's original hand-written picks stay put in its HTML; anything added here shows up right after them.</p>
+
+        <button id="featured-new-btn" class="btn btn-red" type="button">+ add a site</button>
+
+        <form id="featured-form" class="admin-form" hidden>
+          <input type="hidden" id="featured-id">
+          <div class="field-row">
+            <div class="field">
+              <label for="featured-name">site name</label>
+              <input type="text" id="featured-name" maxlength="60" required autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="featured-url">url</label>
+              <input type="text" id="featured-url" maxlength="300" placeholder="https://" required autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="featured-description">why it belongs here</label>
+            <textarea id="featured-description" rows="3" maxlength="280" required></textarea>
+          </div>
+          <div class="field">
+            <label for="featured-style">visit button color</label>
+            <select id="featured-style">
+              <option value="default">default</option>
+              <option value="red">red</option>
+              <option value="teal">teal</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="featured-published" style="display:inline-flex; align-items:center; gap:.5em;">
+              <input type="checkbox" id="featured-published" checked style="width:auto;">
+              published (visible on the webring page)
+            </label>
+          </div>
+          <p id="featured-form-error" class="notice offline" hidden></p>
+          <div class="field-row">
+            <button class="btn btn-red" type="submit" id="featured-save-btn">save site</button>
+            <button class="btn" type="button" id="featured-cancel-btn">cancel</button>
+          </div>
+        </form>
+
+        <p id="featured-empty" class="gb-empty" hidden>no added sites yet — the hand-written picks on links.html are still showing.</p>
+        <ul id="featured-list" class="gb-list"></ul>
+      </div>
+
+      <div class="ticket ticket-torn">
+        <div class="ticket-head">
+          <span>the button wall</span>
+          <span id="wallbtn-count">-- buttons</span>
+        </div>
+
+        <div id="wallbtn-offline" class="notice offline" hidden></div>
+        <p class="hint">88×31-style badges on <code>links.html</code> — the ten newest also show up on the homepage's "a few doors out." upload your own art; never another site's actual logo or badge (see <code>DESIGN.md</code>).</p>
+
+        <button id="wallbtn-new-btn" class="btn btn-red" type="button">+ add a button</button>
+
+        <form id="wallbtn-form" class="admin-form" hidden>
+          <input type="hidden" id="wallbtn-id">
+          <div class="field-row">
+            <div class="field">
+              <label for="wallbtn-name">site name</label>
+              <input type="text" id="wallbtn-name" maxlength="60" required autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="wallbtn-url">url</label>
+              <input type="text" id="wallbtn-url" maxlength="300" placeholder="https://" required autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="wallbtn-tagline">tagline <span class="char-count">(optional, used in the image's alt text)</span></label>
+            <input type="text" id="wallbtn-tagline" maxlength="120" autocomplete="off">
+          </div>
+          <div class="field" id="wallbtn-file-field">
+            <label for="wallbtn-file">button art <span class="char-count">(image file, ideally 88×31)</span></label>
+            <input type="file" id="wallbtn-file" accept="image/*">
+          </div>
+          <p id="wallbtn-edit-hint" class="hint" hidden>the artwork for an existing button can't be swapped here — delete this button and add it again if you need to replace it.</p>
+          <div class="field">
+            <label for="wallbtn-published" style="display:inline-flex; align-items:center; gap:.5em;">
+              <input type="checkbox" id="wallbtn-published" checked style="width:auto;">
+              published (visible on the wall)
+            </label>
+          </div>
+          <p id="wallbtn-form-error" class="notice offline" hidden></p>
+          <div class="field-row">
+            <button class="btn btn-red" type="submit" id="wallbtn-save-btn">save button</button>
+            <button class="btn" type="button" id="wallbtn-cancel-btn">cancel</button>
+          </div>
+        </form>
+
+        <p id="wallbtn-empty" class="gb-empty" hidden>no uploaded buttons yet — the hand-made badges on links.html are still showing.</p>
+        <ul id="wallbtn-list" class="gb-list"></ul>
+      </div>
+
       <div class="ticket ticket-torn">
         <div class="ticket-head">
           <span>wall requests</span>
           <span id="submissions-count">-- pending</span>
         </div>
         <div id="submissions-offline" class="notice offline" hidden></div>
-        <p class="hint">these came in through the webring's "request a spot" form on <code>links.html</code>. add ones you like to the button wall by hand (see <code>README.md</code>); dismiss the rest.</p>
+        <p class="hint">these came in through the webring's "request a spot" form on <code>links.html</code>. add ones you like using "sites we love" or "the button wall" above; dismiss the rest.</p>
         <p id="submissions-empty" class="gb-empty" hidden>no requests waiting.</p>
         <ul id="submissions-list" class="gb-list"></ul>
       </div>
@@ -254,6 +355,8 @@
 <script type="module" src="js/admin-auth.js"></script>
 <script type="module" src="js/admin-tabs.js"></script>
 <script type="module" src="js/admin-articles.js"></script>
+<script type="module" src="js/admin-featured-sites.js"></script>
+<script type="module" src="js/admin-wall-buttons.js"></script>
 <script type="module" src="js/admin-submissions.js"></script>
 <script type="module" src="js/admin-movies.js"></script>
 </body>

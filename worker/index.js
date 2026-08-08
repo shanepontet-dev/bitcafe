@@ -30,8 +30,13 @@ import * as moviesImdbLookup from "../functions/api/admin/movies/imdb-lookup.js"
 import * as moviesId from "../functions/api/admin/movies/[id].js";
 import * as submissionsIndex from "../functions/api/admin/submissions/index.js";
 import * as submissionsId from "../functions/api/admin/submissions/[id].js";
+import * as featuredSitesIndex from "../functions/api/admin/featured-sites/index.js";
+import * as featuredSitesId from "../functions/api/admin/featured-sites/[id].js";
+import * as wallButtonsIndex from "../functions/api/admin/wall-buttons/index.js";
+import * as wallButtonsId from "../functions/api/admin/wall-buttons/[id].js";
 import * as uploadPresign from "../functions/api/admin/uploads/presign.js";
 import * as uploadPoster from "../functions/api/admin/uploads/poster.js";
+import * as uploadBadge from "../functions/api/admin/uploads/badge.js";
 
 const PUBLIC_PATHS = new Set(["/api/admin/login", "/api/admin/logout"]);
 
@@ -97,11 +102,36 @@ export default {
       if (method === "DELETE") return submissionsId.onRequestDelete(context);
     }
 
+    if (path === "/api/admin/featured-sites") {
+      if (method === "GET") return featuredSitesIndex.onRequestGet(context);
+      if (method === "POST") return featuredSitesIndex.onRequestPost(context);
+    }
+    m = path.match(/^\/api\/admin\/featured-sites\/([^/]+)$/);
+    if (m) {
+      context.params.id = decodeURIComponent(m[1]);
+      if (method === "PATCH") return featuredSitesId.onRequestPatch(context);
+      if (method === "DELETE") return featuredSitesId.onRequestDelete(context);
+    }
+
+    if (path === "/api/admin/wall-buttons") {
+      if (method === "GET") return wallButtonsIndex.onRequestGet(context);
+      if (method === "POST") return wallButtonsIndex.onRequestPost(context);
+    }
+    m = path.match(/^\/api\/admin\/wall-buttons\/([^/]+)$/);
+    if (m) {
+      context.params.id = decodeURIComponent(m[1]);
+      if (method === "PATCH") return wallButtonsId.onRequestPatch(context);
+      if (method === "DELETE") return wallButtonsId.onRequestDelete(context);
+    }
+
     if (path === "/api/admin/uploads/presign" && method === "POST") {
       return uploadPresign.onRequestPost(context);
     }
     if (path === "/api/admin/uploads/poster" && method === "POST") {
       return uploadPoster.onRequestPost(context);
+    }
+    if (path === "/api/admin/uploads/badge" && method === "POST") {
+      return uploadBadge.onRequestPost(context);
     }
 
     return jsonError("not found", 404);

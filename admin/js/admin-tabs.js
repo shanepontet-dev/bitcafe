@@ -6,7 +6,7 @@ import { wireLogout } from "./admin-auth.js";
 const tabButtons = document.querySelectorAll(".admin-tabs [data-tab]");
 const panels = {
   articles: document.getElementById("panel-articles"),
-  submissions: document.getElementById("panel-submissions"),
+  webring: document.getElementById("panel-webring"),
   movies: document.getElementById("panel-movies"),
 };
 
