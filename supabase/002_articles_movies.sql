@@ -20,7 +20,7 @@ create table if not exists articles (
   slug text not null unique check (char_length(slug) <= 80),
   title text not null check (char_length(title) <= 120),
   dek text not null check (char_length(dek) <= 200),
-  byline text not null default 'dot_matrix' check (char_length(byline) <= 60),
+  byline text not null default 'fletcher' check (char_length(byline) <= 60),
   body_html text not null,
   pull_quote text check (pull_quote is null or char_length(pull_quote) <= 400),
   pull_cite text check (pull_cite is null or char_length(pull_cite) <= 100),

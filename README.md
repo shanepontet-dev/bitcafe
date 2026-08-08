@@ -299,6 +299,6 @@ nothing they buy ships or costs anything outside the till.
 
 the five seeded articles (`supabase/003_seed_content.sql`) are original
 placeholder writing — edit or delete them from `/admin` whenever you're
-ready, no file-editing or redeploy needed anymore. the "dot_matrix"
+ready, no file-editing or redeploy needed anymore. the "fletcher"
 persona, the coffee menu, and the webring picks are yours to keep,
 rename, or replace outright.

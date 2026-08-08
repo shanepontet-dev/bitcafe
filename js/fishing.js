@@ -57,7 +57,7 @@
     { name: "spyware sunfish",   note: "was already watching you before you cast.", bits: 2, file: "catch-8.png", frameW: 30, frameH: 12, sheetW: 60,  sheetH: 12 },
     { name: "buffering shark",   note: "still loading. showed up anyway.", bits: 3, file: "catch-6.png", frameW: 54, frameH: 22, sheetW: 108, sheetH: 22 }
   ];
-  var GOLDEN_CATCH = { name: "premium-tier goldfish", note: "dot_matrix doesn't know how it got in the till. pays out anyway.", bits: 5, golden: true };
+  var GOLDEN_CATCH = { name: "premium-tier goldfish", note: "fletcher doesn't know how it got in the till. pays out anyway.", bits: 5, golden: true };
   var GOLDEN_ODDS = 0.12;
 
   function pickCatch() {
