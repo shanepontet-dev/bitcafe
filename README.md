@@ -255,9 +255,10 @@ fishing.html            gone fishin': cast, reel in, take the fish; pays
                         out bits, spendable on coffee
 chat.html               live chatroom (needs Supabase, see above)
 guestbook.html          guestbook (needs Supabase, see above)
-links.html              webring: featured sites, an 88x31 button wall
-                        (both admin-managed on top of hand-written picks),
-                        a random-link door, and a "request a spot" form
+links.html              webring: featured sites (admin-managed on top of
+                        hand-written picks), an 88x31 button wall (fully
+                        admin-managed, starts empty), a random-link door,
+                        and a "request a spot" form
 notices.html            the notice board: pinned updates + visitor pins
 movie-night.html        video screenings (admin-managed), linked from the notice board
 404.html                not-found page
@@ -296,7 +297,6 @@ functions/api/admin/**  the /admin backend's actual endpoint logic, one file
 package.json            two dependencies: aws4fetch (R2 presigning) and wrangler
                         (deploys the Worker) — the public site still has no
                         build step of its own
-img/badges/*.svg        hand-made 88x31 tribute badges for the button wall
 img/fishing/*.png       fishing sprites/background, from two free
                         itch.io pixel-art packs (see fishing.html's
                         footer and media/ for the originals/licenses)
