@@ -166,10 +166,10 @@ var RANDOM_POOL = [
   });
 })();
 
-// "sites we love" admin-uploaded picks (js/admin-featured-sites.js,
-// stored in the featured_sites table) -- appended after links.html's
-// own hand-written coupons, same append-only spirit as the button
-// wall above.
+// "sites we love" -- entirely admin-managed now (js/admin-featured-sites.js,
+// stored in the featured_sites table), same as the button wall above.
+// links.html's coupon strip starts empty in the static HTML and fills
+// in from here.
 (function renderFeaturedSites() {
   var strips = document.querySelectorAll(".coupon-strip[data-featured-sites]");
   if (!strips.length) return;
@@ -181,12 +181,27 @@ var RANDOM_POOL = [
     h3.textContent = row.site_name;
     var p = document.createElement("p");
     p.textContent = row.description;
+
     var a = document.createElement("a");
-    a.className = "btn" + (row.button_style === "red" ? " btn-red" : row.button_style === "teal" ? " btn-teal" : "");
     a.href = row.url;
     a.target = "_blank";
     a.rel = "noopener";
-    a.textContent = "visit " + row.url.replace(/^https?:\/\//i, "").replace(/\/$/, "") + " →";
+
+    // button art (uploaded through /admin) replaces the usual text
+    // button entirely when a coupon has one; otherwise it's the same
+    // "visit X ->" button the hand-written coupons above already use.
+    if (row.image_url) {
+      a.className = "coupon-btn-art";
+      var img = document.createElement("img");
+      img.src = row.image_url;
+      img.loading = "lazy";
+      img.alt = "visit " + row.site_name;
+      a.appendChild(img);
+    } else {
+      a.className = "btn" + (row.button_style === "red" ? " btn-red" : row.button_style === "teal" ? " btn-teal" : "");
+      a.textContent = "visit " + row.url.replace(/^https?:\/\//i, "").replace(/\/$/, "") + " →";
+    }
+
     div.append(h3, p, a);
     return div;
   }
@@ -205,17 +220,20 @@ var RANDOM_POOL = [
       var strip = strips[i];
       var { data, error } = await supabase
         .from("featured_sites")
-        .select("site_name, url, description, button_style")
+        .select("site_name, url, description, button_style, image_url")
         .eq("published", true)
         .order("sort_order", { ascending: true })
         .order("created_at", { ascending: true });
 
-      if (error || !data || !data.length) continue;
+      if (error || !data) continue;
 
       data.forEach(function (row) {
         strip.appendChild(buildCoupon(row));
         if (RANDOM_POOL.indexOf(row.url) === -1) RANDOM_POOL.push(row.url);
       });
+
+      var emptyEl = document.getElementById("sites-empty");
+      if (emptyEl) emptyEl.hidden = data.length > 0;
 
       updatePoolLabel();
     }

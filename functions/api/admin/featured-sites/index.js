@@ -10,6 +10,11 @@ function normalizeFeaturedSite(body) {
     url: clampStr(body.url, 300),
     description: clampStr(body.description, 280),
     button_style: BUTTON_STYLES.has(body.button_style) ? body.button_style : "default",
+    // optional: if set, links.html swaps the "visit X ->" text button
+    // for this image instead (see js/webring.js). left null, a coupon
+    // renders exactly as it always has.
+    image_key: body.image_key ? clampStr(body.image_key, 300) : null,
+    image_url: body.image_url ? clampStr(body.image_url, 2000) : null,
     published: body.published !== false,
     sort_order: clampInt(body.sort_order, -1000000, 1000000, 0),
   };
