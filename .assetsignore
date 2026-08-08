@@ -1,0 +1,21 @@
+# bit cafe: files the static-assets uploader should never publish.
+# Workers static assets doesn't auto-exclude these the way Pages used
+# to -- same format as .gitignore.
+
+node_modules
+.git
+.wrangler
+
+# backend source -- served by worker/index.js at /api/admin/*, not
+# meant to be downloadable as plain files in their own right
+functions
+worker
+wrangler.jsonc
+
+# tooling / repo-only files with no reason to be a public URL
+package.json
+package-lock.json
+supabase
+.assetsignore
+.gitignore
+media

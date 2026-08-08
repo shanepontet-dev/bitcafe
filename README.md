@@ -14,7 +14,7 @@ there's also a real, password-protected `/admin` — see
 articles, checking webring "request a spot" pitches, and uploading or
 deleting movie night's screenings, without hand-editing HTML or
 opening the Supabase dashboard. that part *does* need one specific
-host (Cloudflare Pages) and a small server-side dependency; the public
+host (Cloudflare) and a small server-side dependency; the public
 pages stay portable to any static host regardless.
 
 ## running it locally
@@ -117,36 +117,47 @@ upload.
 
 this needs real server code — checking a password, writing to Supabase
 with a key that must never reach the browser, signing upload URLs — so
-unlike the rest of the site, it only works on **Cloudflare Pages**
-specifically (not Neocities/GitHub Pages/Netlify/Vercel, which only
-serve files). the public pages still work anywhere; `/admin` just won't
-exist anywhere else.
+unlike the rest of the site, it only works on **Cloudflare** specifically
+(not Neocities/GitHub Pages/Netlify/Vercel, which only serve files).
+the public pages still work anywhere; `/admin` just won't exist
+anywhere else.
+
+concretely, this deploys as a **Cloudflare Worker with static assets**
+— Cloudflare's current default for a new GitHub-connected project (the
+older separate "Pages" product still exists for projects already on
+it, but new ones go through a unified "Workers" flow now). `wrangler.jsonc`
+at the repo root already has the config committed — the whole repo
+root serves as static files, and only `/api/admin/*` requests reach
+`worker/index.js`, the small router in front of `functions/api/admin/**`'s
+actual endpoint logic.
 
 ### one-time setup
 
 1. **find your R2 bucket.** you already have one if `movie-night.html`
    is showing real screenings — its videos load from a
    `pub-<hash>.r2.dev` URL, and that URL's bucket is the one to use.
-   Cloudflare dashboard → R2 → note the bucket's exact name.
+   Cloudflare dashboard → R2 → note the bucket's exact name (already
+   wired into `wrangler.jsonc` as `bitcafe-media` — update that file if
+   yours is named differently).
 2. **create an R2 API token.** R2 → *Manage API Tokens* → create one
    scoped to just that bucket, permission "Object Read & Write". note
    the **Access Key ID**, **Secret Access Key**, and your **Account
    ID** (shown on the same page/the R2 overview) — this is what lets a
    Function sign a presigned upload URL; it's unrelated to (and much
    narrower than) your global Cloudflare API key.
-3. **create the Pages project.** Cloudflare dashboard → *Workers &
-   Pages* → *Create* → *Pages* → connect this GitHub repo → Production
-   branch `main` → framework preset "None" → build command *blank* →
-   build output directory `/`. this deploys the current repo to a
-   `<project>.pages.dev` URL, separate from wherever you're deployed
-   today — nothing about your existing deploy changes yet.
-4. **bind the R2 bucket.** project → *Settings* → *Bindings* → add an
-   R2 bucket binding named exactly `MEDIA_BUCKET`, pointing at the
-   bucket from step 1. do this for both the Production and Preview
-   environments.
-5. **set the secrets.** project → *Settings* → *Variables and Secrets*
-   (or `npx wrangler pages secret put NAME --project-name=<project>`
-   for Production only — Preview secrets need the dashboard):
+3. **create the Worker project.** Cloudflare dashboard → *Workers &
+   Pages* → *Create* → connect this GitHub repo → set the production
+   branch to whichever branch actually has this code (`admin-backend`
+   until it's merged to `main`) → build command *blank* → deploy
+   command `npx wrangler deploy` (Cloudflare should prefill this once
+   it sees `wrangler.jsonc`). this deploys the repo to its own
+   `<project>.workers.dev` URL, separate from wherever the public site
+   is deployed today — nothing about your existing deploy changes yet.
+   the R2 bucket binding doesn't need a manual dashboard step; it's
+   already declared in `wrangler.jsonc`.
+4. **set the secrets.** project → *Settings* → *Variables and Secrets*
+   (or `npx wrangler secret put NAME` from a terminal with `wrangler
+   login` run first):
 
    | name | value |
    |---|---|
@@ -160,11 +171,11 @@ exist anywhere else.
    | `R2_BUCKET_NAME` | from step 1 |
    | `R2_PUBLIC_BASE_URL` | the `https://pub-<hash>.r2.dev` origin your bucket already serves from (everything before the filename in the video URLs on `movie-night.html` today) |
 
-6. **run the database migrations** — see "connecting the till" above
+5. **run the database migrations** — see "connecting the till" above
    (`002_articles_movies.sql`, then optionally `003_seed_content.sql`).
-7. visit `https://<project>.pages.dev/admin/`, log in with
-   `ADMIN_PASSWORD`, and confirm you can see the articles/movies/wall
-   requests tabs.
+6. visit `https://<project>.<your-subdomain>.workers.dev/admin/`, log
+   in with `ADMIN_PASSWORD`, and confirm you can see the
+   articles/movies/wall requests tabs.
 
 losing `SESSION_SECRET` (or deliberately rotating it) instantly logs
 everyone out — that's the "kill switch" if you ever suspect a session
@@ -172,10 +183,11 @@ leaked. changing `ADMIN_PASSWORD` takes effect on the next login
 attempt; existing sessions stay valid until they expire (14 days) or
 `SESSION_SECRET` rotates.
 
-once you're happy with it on the `.pages.dev` URL, point your domain
-at Cloudflare Pages instead of wherever the public site deploys today,
-then turn the old host off — see `functions/` for the actual backend
-code (`_lib/` has the shared session/Supabase/R2 helpers,
+once this branch is merged to `main` and you're happy with it on the
+`.workers.dev` URL, point your domain at this Worker instead of
+wherever the public site deploys today, then turn the old host off —
+see `worker/index.js` for the router and `functions/` for the actual
+backend code (`_lib/` has the shared session/Supabase/R2 helpers,
 `api/admin/` has one file per endpoint) if you want to read how it
 works before trusting it with your storage bill.
 
@@ -196,8 +208,8 @@ file (that's normal for Supabase — the anon key is meant to be public;
 protection comes from the row-level security policies, not from hiding
 the keys).
 
-**`/admin` is the one exception** — it only runs on Cloudflare Pages
-(see "the back office" above). if you deploy the public pages somewhere
+**`/admin` is the one exception** — it only runs on Cloudflare (see
+"the back office" above). if you deploy the public pages somewhere
 else, `/admin` and `article.html`/`movie-night.html`'s admin-managed
 content still work fine (they just read Supabase directly, same as
 chat/guestbook/notices) — you'd only lose the login-gated dashboard
@@ -251,12 +263,19 @@ supabase/003_seed_content.sql     optional: loads the original 5 articles + 2 mo
 admin/index.html        the /admin login page
 admin/dashboard.html    the back office: articles / wall requests / movie night tabs
 admin/js/*.js           dashboard logic, one file per tab + shared auth helpers
+wrangler.jsonc          Cloudflare Worker config: static assets + the R2 binding
+                        (see "the back office" above for how this gets deployed)
+.assetsignore           keeps functions/, worker/, node_modules/, etc. out of the
+                        public static-asset upload (gitignore-style syntax)
+worker/index.js         the Worker's entry point: routes /api/admin/* to the
+                        right functions/api/admin/** handler, everything else
+                        falls through to being served as a static file
 functions/_lib/*.js     shared backend helpers: sessions, Supabase REST, R2
-functions/api/admin/**  the /admin backend itself (Cloudflare Pages Functions;
-                        see "the back office" above for how this gets deployed)
-package.json            one dependency (aws4fetch), used only by functions/ to
-                        sign R2 presigned upload URLs — the public site still
-                        has no build step of its own
+functions/api/admin/**  the /admin backend's actual endpoint logic, one file
+                        per route (dispatched by worker/index.js, above)
+package.json            two dependencies: aws4fetch (R2 presigning) and wrangler
+                        (deploys the Worker) — the public site still has no
+                        build step of its own
 img/badges/*.svg        hand-made 88x31 tribute badges for the button wall
 img/fishing/*.png       fishing sprites/background, from two free
                         itch.io pixel-art packs (see fishing.html's
