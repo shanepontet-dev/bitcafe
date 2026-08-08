@@ -6,3 +6,10 @@
 # anyway, and these two are real movie files pending a decision on how/if
 # movie-night.html gets real video sources in the public deploy)
 media/*.mp4
+
+# local tooling only (e.g. wrangler, installed on demand) -- the site
+# itself has no build step and no dependency on this being present
+node_modules/
+package.json
+package-lock.json
+.wrangler/
