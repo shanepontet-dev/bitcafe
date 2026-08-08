@@ -619,6 +619,19 @@ footer.site-foot::before{
 .coupon p{ font-size:.85rem; color: var(--ink-soft); margin-bottom: var(--space-3); }
 .coupon .btn{ font-size:.72rem; padding:.6em 1em; }
 
+/* coupon-btn-art: an admin-uploaded image standing in for the usual
+   text "visit" button (js/webring.js's buildCoupon) -- same hover
+   lift/shadow as the button wall's badges, not a separate style. */
+.coupon-btn-art{ display:inline-block; line-height:0; }
+.coupon-btn-art img{
+  display:block; max-width:100%;
+  image-rendering: pixelated;
+  border: 1px solid var(--ink-line);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.coupon-btn-art:hover img{ transform: translateY(-2px); box-shadow: var(--shadow-1); }
+.coupon-btn-art:focus-visible{ outline:3px solid var(--red); outline-offset:2px; }
+
 /* ---- button wall + random link ------------------------------------------*/
 .button-wall{
   display:flex; flex-wrap:wrap; gap: var(--space-4);

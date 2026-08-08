@@ -57,7 +57,13 @@ silently failing.
      rows instead of starting the dashboard from empty. then run
      [`supabase/004_webring_content.sql`](supabase/004_webring_content.sql),
      which adds the `featured_sites` and `wall_buttons` tables behind
-     `/admin`'s webring tab.
+     `/admin`'s webring tab, and
+     [`supabase/005_featured_sites_artwork.sql`](supabase/005_featured_sites_artwork.sql),
+     which adds the optional button-art columns to `featured_sites`.
+     optionally follow those with
+     [`supabase/006_seed_featured_sites.sql`](supabase/006_seed_featured_sites.sql),
+     which moves the site's original 6 "sites we love" coupons out of
+     `links.html`'s HTML and into real, editable rows.
 3. open **Project settings → API**. you need two values: the **Project
    URL** and the **anon public** key (not the `service_role` key — that
    one's secret and never belongs in client code).
@@ -255,10 +261,11 @@ fishing.html            gone fishin': cast, reel in, take the fish; pays
                         out bits, spendable on coffee
 chat.html               live chatroom (needs Supabase, see above)
 guestbook.html          guestbook (needs Supabase, see above)
-links.html              webring: featured sites (admin-managed on top of
-                        hand-written picks), an 88x31 button wall (fully
-                        admin-managed, starts empty), a random-link door,
-                        and a "request a spot" form
+links.html              webring: featured sites and an 88x31 button wall
+                        (both fully admin-managed now, see
+                        006_seed_featured_sites.sql for the original
+                        picks), a random-link door, and a "request a
+                        spot" form
 notices.html            the notice board: pinned updates + visitor pins
 movie-night.html        video screenings (admin-managed), linked from the notice board
 404.html                not-found page
@@ -281,6 +288,9 @@ supabase/schema.sql               original tables: chat, guestbook, notices, sit
 supabase/002_articles_movies.sql  adds the articles/movies tables /admin manages
 supabase/003_seed_content.sql     optional: loads the original 5 articles + 2 movies as rows
 supabase/004_webring_content.sql  adds the featured_sites/wall_buttons tables /admin manages
+supabase/005_featured_sites_artwork.sql  adds optional button-art columns to featured_sites
+supabase/006_seed_featured_sites.sql     optional: moves the original 6 "sites we love"
+                                          coupons out of links.html's HTML into real rows
 admin/index.html        the /admin login page
 admin/dashboard.html    the back office: articles / webring / movie night tabs
 admin/js/*.js           dashboard logic, one file per panel + shared auth/reorder helpers

@@ -1,8 +1,10 @@
-// bit cafe admin: button-wall artwork upload. these are small images
-// (an 88x31-style badge, or close to it), well under Cloudflare's
-// 100MB Free-plan request cap, so like uploads/poster.js this goes
-// straight through the Function's own request body into R2 via the
-// native binding -- no presigning needed.
+// bit cafe admin: small-image upload shared by the button wall
+// (wall_buttons) and an optional "sites we love" coupon image
+// (featured_sites) -- an 88x31-style badge, or close to it, well
+// under Cloudflare's 100MB Free-plan request cap, so like
+// uploads/poster.js this goes straight through the Function's own
+// request body into R2 via the native binding -- no presigning
+// needed.
 
 import { putObject, publicUrlFor } from "../../../_lib/r2.js";
 import { json, jsonError } from "../../../_lib/http.js";

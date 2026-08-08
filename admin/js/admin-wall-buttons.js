@@ -1,10 +1,9 @@
 // bit cafe admin: the "button wall" panel inside the webring tab --
 // list, add (upload art + link), edit (metadata only), delete,
-// reorder. links.html and index.html keep their own hand-authored
-// badges in the page's markup; rows managed here (js/webring.js,
-// fetched read-only with the anon key) are appended after those on
-// links.html's full wall, and the newest few also show up on
-// index.html's "a few doors out".
+// reorder. entirely admin-managed now (js/webring.js fetches
+// published rows read-only with the anon key and renders them into
+// links.html's wall, which starts empty in the static HTML), and the
+// newest few also show up on index.html's "a few doors out".
 //
 // upload flow for a new button: POST the image straight through
 // /api/admin/uploads/badge (small file, no presigning needed -- see
@@ -12,6 +11,7 @@
 // key/url. mirrors admin-movies.js's poster-upload step.
 import { adminFetch } from "./admin-auth.js";
 import { wireDragRow, persistOrder } from "./admin-reorder.js";
+import { wireImagePaste } from "./admin-paste-upload.js";
 
 const els = {
   offline: document.getElementById("wallbtn-offline"),
@@ -70,6 +70,7 @@ if (els.list) {
 
   els.newBtn.addEventListener("click", openForCreate);
   els.cancelBtn.addEventListener("click", function () { els.form.hidden = true; });
+  wireImagePaste(els.form, els.file, { urlInput: els.url, nameInput: els.name });
 
   function persist() {
     persistOrder(els.list, currentButtons, function (id, index) {

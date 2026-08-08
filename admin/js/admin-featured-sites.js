@@ -1,10 +1,12 @@
 // bit cafe admin: the "sites we love" panel inside the webring tab --
-// list, add, edit, delete, reorder. links.html's coupon strip keeps
-// its own hand-written picks in the page's markup; rows managed here
-// (js/webring.js, fetched read-only with the anon key) are appended
-// after those, never replacing them.
+// list, add, edit, delete, reorder. entirely admin-managed now
+// (js/webring.js fetches published rows read-only with the anon key
+// and renders them into links.html's coupon strip, which starts empty
+// in the static HTML) -- including fletcher's original picks, moved
+// into this table by supabase/006_seed_featured_sites.sql.
 import { adminFetch } from "./admin-auth.js";
 import { wireDragRow, persistOrder } from "./admin-reorder.js";
+import { wireImagePaste } from "./admin-paste-upload.js";
 
 const els = {
   offline: document.getElementById("featured-offline"),
@@ -21,6 +23,9 @@ const els = {
   url: document.getElementById("featured-url"),
   description: document.getElementById("featured-description"),
   style: document.getElementById("featured-style"),
+  fileField: document.getElementById("featured-file-field"),
+  file: document.getElementById("featured-file"),
+  editHint: document.getElementById("featured-edit-hint"),
   published: document.getElementById("featured-published"),
 };
 
@@ -37,6 +42,8 @@ if (els.list) {
 
   function openForCreate() {
     resetForm();
+    els.fileField.hidden = false;
+    els.editHint.hidden = true;
     els.form.hidden = false;
     els.name.focus();
   }
@@ -49,6 +56,8 @@ if (els.list) {
     els.description.value = site.description;
     els.style.value = site.button_style || "default";
     els.published.checked = !!site.published;
+    els.fileField.hidden = true;
+    els.editHint.hidden = false;
     els.saveBtn.textContent = "update site";
     els.form.hidden = false;
     els.name.focus();
@@ -56,6 +65,7 @@ if (els.list) {
 
   els.newBtn.addEventListener("click", openForCreate);
   els.cancelBtn.addEventListener("click", function () { els.form.hidden = true; });
+  wireImagePaste(els.form, els.file, { urlInput: els.url, nameInput: els.name });
 
   function persist() {
     persistOrder(els.list, currentSites, function (id, index) {
@@ -101,8 +111,16 @@ if (els.list) {
 
       var titleEl = document.createElement("span");
       titleEl.className = "gb-entry-nick";
-      titleEl.textContent = site.site_name + " (" + site.button_style + ")";
+      titleEl.textContent = site.site_name + (site.image_url ? " (button art)" : " (" + site.button_style + ")");
       left.append(handle, titleEl);
+
+      if (site.image_url) {
+        var thumb = document.createElement("img");
+        thumb.className = "gb-entry-thumb";
+        thumb.src = site.image_url;
+        thumb.alt = "";
+        left.insertBefore(thumb, titleEl);
+      }
 
       var stamp = document.createElement("span");
       stamp.className = "stamp small" + (site.published ? " teal" : "");
@@ -155,6 +173,22 @@ if (els.list) {
     }
   }
 
+  async function uploadButtonArt(file) {
+    var res = await adminFetch("/api/admin/uploads/badge", {
+      method: "POST",
+      headers: {
+        "Content-Type": file.type || "application/octet-stream",
+        "X-Filename": encodeURIComponent(file.name),
+      },
+      body: file,
+    });
+    if (!res.ok) {
+      var data = await res.json().catch(function () { return {}; });
+      throw new Error(data.error || "button art upload failed");
+    }
+    return res.json();
+  }
+
   els.form.addEventListener("submit", async function (evt) {
     evt.preventDefault();
     els.formError.hidden = true;
@@ -169,18 +203,34 @@ if (els.list) {
     };
 
     var id = els.id.value;
-    var res = id
-      ? await adminFetch("/api/admin/featured-sites/" + id, { method: "PATCH", body: JSON.stringify(body) })
-      : await adminFetch("/api/admin/featured-sites", { method: "POST", body: JSON.stringify(body) });
 
-    if (res.ok) {
+    try {
+      if (id) {
+        var updateRes = await adminFetch("/api/admin/featured-sites/" + id, { method: "PATCH", body: JSON.stringify(body) });
+        if (!updateRes.ok) throw new Error((await updateRes.json().catch(function () { return {}; })).error || "couldn't save");
+      } else {
+        // button art is optional -- only upload one if a file was
+        // actually chosen; otherwise the coupon just gets the usual
+        // text "visit" button (image_key/image_url stay null).
+        var file = els.file.files[0];
+        if (file) {
+          els.saveBtn.textContent = "uploading…";
+          var uploaded = await uploadButtonArt(file);
+          body.image_key = uploaded.key;
+          body.image_url = uploaded.url;
+        }
+        els.saveBtn.textContent = "saving…";
+        var createRes = await adminFetch("/api/admin/featured-sites", { method: "POST", body: JSON.stringify(body) });
+        if (!createRes.ok) throw new Error((await createRes.json().catch(function () { return {}; })).error || "couldn't save");
+      }
+
       els.form.hidden = true;
       load();
-    } else {
-      var data = await res.json().catch(function () { return {}; });
-      els.formError.textContent = data.error || "couldn't save. try again.";
+    } catch (err) {
+      els.formError.textContent = err.message || "couldn't save. try again.";
       els.formError.hidden = false;
     }
+
     els.saveBtn.disabled = false;
   });
 

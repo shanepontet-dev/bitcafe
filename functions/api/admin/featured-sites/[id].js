@@ -1,11 +1,14 @@
-import { sbUpdate, sbDelete } from "../../../_lib/supabase.js";
+import { sbSelect, sbUpdate, sbDelete } from "../../../_lib/supabase.js";
+import { deleteObjects } from "../../../_lib/r2.js";
 import { json, jsonError } from "../../../_lib/http.js";
 import { clampInt, clampStr } from "../../../_lib/validate.js";
 
 const BUTTON_STYLES = new Set(["default", "red", "teal"]);
 
 // only touches fields actually present in the request body, same
-// convention as articles/[id].js.
+// convention as articles/[id].js. artwork itself can't be added or
+// swapped here -- same convention as wall-buttons/[id].js -- so
+// image_key/image_url are never patchable.
 export async function onRequestPatch(context) {
   const { request, env, params } = context;
   let body;
@@ -33,9 +36,16 @@ export async function onRequestPatch(context) {
   }
 }
 
+// deletes the R2 object (if this coupon has one) before the row, same
+// order/reasoning as wall-buttons/[id].js and movies/[id].js.
 export async function onRequestDelete(context) {
   const { env, params } = context;
   try {
+    const rows = await sbSelect(env, "featured_sites", `?id=eq.${encodeURIComponent(params.id)}&select=image_key`);
+    const row = rows[0];
+    if (row && row.image_key) {
+      await deleteObjects(env.MEDIA_BUCKET, [row.image_key]);
+    }
     await sbDelete(env, "featured_sites", params.id);
     return json({ ok: true });
   } catch (err) {

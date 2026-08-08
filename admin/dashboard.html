@@ -123,7 +123,7 @@
         </div>
 
         <div id="featured-offline" class="notice offline" hidden></div>
-        <p class="hint">the coupon strip at the top of <code>links.html</code>. the page's original hand-written picks stay put in its HTML; anything added here shows up right after them.</p>
+        <p class="hint">the coupon strip at the top of <code>links.html</code>, including fletcher's original picks — all editable here now. give a site button art and it replaces the "visit" button on its coupon; skip it for a plain text button.</p>
 
         <button id="featured-new-btn" class="btn btn-red" type="button">+ add a site</button>
 
@@ -144,13 +144,19 @@
             <textarea id="featured-description" rows="3" maxlength="280" required></textarea>
           </div>
           <div class="field">
-            <label for="featured-style">visit button color</label>
+            <label for="featured-style">visit button color <span class="char-count">(ignored if you add button art below)</span></label>
             <select id="featured-style">
               <option value="default">default</option>
               <option value="red">red</option>
               <option value="teal">teal</option>
             </select>
           </div>
+          <div class="field" id="featured-file-field">
+            <label for="featured-file">button art <span class="char-count">(optional — replaces the "visit" button with this image; choose a file or paste one with Cmd/Ctrl+V)</span></label>
+            <input type="file" id="featured-file" accept="image/*">
+            <p class="hint">pasting an image copied from a webpage will also fill in the url and site name below, if the copy carried a link with it.</p>
+          </div>
+          <p id="featured-edit-hint" class="hint" hidden>button art can't be added or swapped here for an existing site — delete this entry and add it again if you need to change it.</p>
           <div class="field">
             <label for="featured-published" style="display:inline-flex; align-items:center; gap:.5em;">
               <input type="checkbox" id="featured-published" checked style="width:auto;">
@@ -196,8 +202,9 @@
             <input type="text" id="wallbtn-tagline" maxlength="120" autocomplete="off">
           </div>
           <div class="field" id="wallbtn-file-field">
-            <label for="wallbtn-file">button art <span class="char-count">(image file, ideally 88×31)</span></label>
+            <label for="wallbtn-file">button art <span class="char-count">(image file, ideally 88×31 — choose one or paste with Cmd/Ctrl+V)</span></label>
             <input type="file" id="wallbtn-file" accept="image/*">
+            <p class="hint">pasting an image copied from a webpage will also fill in the url and site name below, if the copy carried a link with it.</p>
           </div>
           <p id="wallbtn-edit-hint" class="hint" hidden>the artwork for an existing button can't be swapped here — delete this button and add it again if you need to replace it.</p>
           <div class="field">
