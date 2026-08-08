@@ -37,6 +37,7 @@ import * as wallButtonsId from "../functions/api/admin/wall-buttons/[id].js";
 import * as uploadPresign from "../functions/api/admin/uploads/presign.js";
 import * as uploadPoster from "../functions/api/admin/uploads/poster.js";
 import * as uploadBadge from "../functions/api/admin/uploads/badge.js";
+import * as uploadBadgeFromUrl from "../functions/api/admin/uploads/badge-from-url.js";
 
 const PUBLIC_PATHS = new Set(["/api/admin/login", "/api/admin/logout"]);
 
@@ -132,6 +133,9 @@ export default {
     }
     if (path === "/api/admin/uploads/badge" && method === "POST") {
       return uploadBadge.onRequestPost(context);
+    }
+    if (path === "/api/admin/uploads/badge-from-url" && method === "POST") {
+      return uploadBadgeFromUrl.onRequestPost(context);
     }
 
     return jsonError("not found", 404);

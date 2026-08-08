@@ -11,12 +11,15 @@
 // key/url. mirrors admin-movies.js's poster-upload step.
 import { adminFetch } from "./admin-auth.js";
 import { wireDragRow, persistOrder } from "./admin-reorder.js";
-import { wireImagePaste } from "./admin-paste-upload.js";
+import { wireImagePaste, wireImageDrop } from "./admin-paste-upload.js";
 
 const els = {
   offline: document.getElementById("wallbtn-offline"),
   count: document.getElementById("wallbtn-count"),
   newBtn: document.getElementById("wallbtn-new-btn"),
+  dropzone: document.getElementById("wallbtn-dropzone"),
+  dropPreview: document.getElementById("wallbtn-drop-preview"),
+  dropHint: document.getElementById("wallbtn-drop-hint"),
   form: document.getElementById("wallbtn-form"),
   formError: document.getElementById("wallbtn-form-error"),
   cancelBtn: document.getElementById("wallbtn-cancel-btn"),
@@ -35,6 +38,14 @@ const els = {
 
 if (els.list) {
   var currentButtons = [];
+  var pendingDropUpload = null; // {key, url} once a webpage-dragged image has been fetched server-side; cleared by picking a file by hand
+  var dropHintDefault = els.dropHint ? els.dropHint.textContent : "";
+
+  function resetDropzone() {
+    pendingDropUpload = null;
+    if (els.dropPreview) els.dropPreview.hidden = true;
+    if (els.dropHint) els.dropHint.textContent = dropHintDefault;
+  }
 
   function resetForm() {
     els.form.reset();
@@ -42,12 +53,12 @@ if (els.list) {
     els.published.checked = true;
     els.formError.hidden = true;
     els.saveBtn.textContent = "save button";
+    resetDropzone();
   }
 
   function openForCreate() {
     resetForm();
     els.fileField.hidden = false;
-    els.file.required = true;
     els.editHint.hidden = true;
     els.form.hidden = false;
     els.name.focus();
@@ -61,7 +72,6 @@ if (els.list) {
     els.tagline.value = button.tagline || "";
     els.published.checked = !!button.published;
     els.fileField.hidden = true;
-    els.file.required = false;
     els.editHint.hidden = false;
     els.saveBtn.textContent = "update button";
     els.form.hidden = false;
@@ -71,6 +81,58 @@ if (els.list) {
   els.newBtn.addEventListener("click", openForCreate);
   els.cancelBtn.addEventListener("click", function () { els.form.hidden = true; });
   wireImagePaste(els.form, els.file, { urlInput: els.url, nameInput: els.name });
+
+  els.file.addEventListener("change", function () {
+    // a manual file choice always wins over an earlier drop
+    if (els.file.files[0]) resetDropzone();
+  });
+
+  if (els.dropzone) {
+    // the dropzone doubles as a click target too -- drag-and-drop has
+    // no keyboard equivalent, so this is what makes it reachable
+    // without a mouse (and just convenient for anyone who'd rather
+    // click than drag).
+    els.dropzone.addEventListener("click", function () {
+      if (els.form.hidden) openForCreate();
+      els.file.click();
+    });
+    els.dropzone.addEventListener("keydown", function (evt) {
+      if (evt.key !== "Enter" && evt.key !== " ") return;
+      evt.preventDefault();
+      if (els.form.hidden) openForCreate();
+      els.file.click();
+    });
+
+    wireImageDrop(els.dropzone, els.file, {
+      urlInput: els.url,
+      nameInput: els.name,
+      onDrop: function () {
+        if (els.form.hidden) openForCreate();
+      },
+      onFile: function (file) {
+        pendingDropUpload = null;
+        els.dropPreview.src = URL.createObjectURL(file);
+        els.dropPreview.hidden = false;
+        els.dropHint.textContent = "got it — check the fields below before saving.";
+      },
+      fetchFromUrl: async function (url) {
+        els.dropHint.textContent = "fetching that image…";
+        try {
+          var res = await adminFetch("/api/admin/uploads/badge-from-url", {
+            method: "POST",
+            body: JSON.stringify({ url: url }),
+          });
+          if (!res.ok) throw new Error((await res.json().catch(function () { return {}; })).error || "couldn't grab that image");
+          pendingDropUpload = await res.json();
+          els.dropPreview.src = pendingDropUpload.url;
+          els.dropPreview.hidden = false;
+          els.dropHint.textContent = "got it — check the fields below before saving.";
+        } catch (err) {
+          els.dropHint.textContent = (err.message || "couldn't grab that image") + " — try saving it and choosing the file instead.";
+        }
+      },
+    });
+  }
 
   function persist() {
     persistOrder(els.list, currentButtons, function (id, index) {
@@ -208,16 +270,23 @@ if (els.list) {
         });
         if (!updateRes.ok) throw new Error((await updateRes.json().catch(function () { return {}; })).error || "couldn't save");
       } else {
-        var file = els.file.files[0];
-        if (!file) throw new Error("pick an image file for the button art");
-
-        els.saveBtn.textContent = "uploading…";
-        var uploaded = await uploadBadgeArt(file);
+        var imageFields;
+        if (pendingDropUpload) {
+          // already uploaded server-side by the drop zone (see
+          // fetchFromUrl above) -- nothing left to do but use it.
+          imageFields = { image_key: pendingDropUpload.key, image_url: pendingDropUpload.url };
+        } else {
+          var file = els.file.files[0];
+          if (!file) throw new Error("pick an image file for the button art, or drag one into the drop zone above");
+          els.saveBtn.textContent = "uploading…";
+          var uploaded = await uploadBadgeArt(file);
+          imageFields = { image_key: uploaded.key, image_url: uploaded.url };
+        }
 
         els.saveBtn.textContent = "saving…";
         var createRes = await adminFetch("/api/admin/wall-buttons", {
           method: "POST",
-          body: JSON.stringify(Object.assign({}, metadata, { image_key: uploaded.key, image_url: uploaded.url })),
+          body: JSON.stringify(Object.assign({}, metadata, imageFields)),
         });
         if (!createRes.ok) throw new Error((await createRes.json().catch(function () { return {}; })).error || "couldn't save");
       }
