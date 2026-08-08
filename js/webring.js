@@ -80,14 +80,13 @@ var RANDOM_POOL = [
   });
 })();
 
-// the button wall's admin-uploaded buttons (js/admin-wall-buttons.js,
-// stored in the wall_buttons table) -- appended after whichever
-// hand-authored badges already sit in the page's own markup, never
-// replacing them. links.html's wall shows every published button
-// (data-wall-buttons="all"); index.html's "a few doors out" teaser
-// shows only the newest few (data-wall-buttons="newest:N"). both
-// pages' <ul class="button-wall"> already exist in the static HTML,
-// so this only ever adds <li>s to what's already on screen.
+// the button wall -- entirely admin-uploaded now (js/admin-wall-buttons.js,
+// stored in the wall_buttons table); the wall starts empty and fills in
+// as buttons get added through /admin. links.html's wall shows every
+// published button (data-wall-buttons="all"); index.html's "a few doors
+// out" teaser shows only the newest few (data-wall-buttons="newest:N").
+// both pages' <ul class="button-wall"> already exist in the static
+// HTML (empty), so this only ever adds <li>s to it.
 (function renderWallButtons() {
   var lists = document.querySelectorAll(".button-wall[data-wall-buttons]");
   if (!lists.length) return;
@@ -114,6 +113,11 @@ var RANDOM_POOL = [
     if (poolLabel) poolLabel.textContent = "picks from " + RANDOM_POOL.length;
   }
 
+  // the "empty" notices (#wall-empty, #doors-empty) are hidden by
+  // default in the HTML and only ever shown here, once we actually
+  // know the wall has nothing published yet -- so a page that never
+  // finishes loading this script just keeps quiet rather than
+  // flashing a false "empty" claim.
   async function boot() {
     if (!isConfigured(supabaseConfig)) return;
     const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
@@ -137,7 +141,7 @@ var RANDOM_POOL = [
       }
 
       var { data, error } = await query;
-      if (error || !data || !data.length) continue;
+      if (error || !data) continue; // a real fetch failure -- leave this list's labels alone
 
       data.forEach(function (row) {
         list.appendChild(buildBadge(row));
@@ -145,10 +149,13 @@ var RANDOM_POOL = [
       });
 
       var total = staticCount + data.length;
+      var emptyEl = list.parentElement.querySelector("#wall-empty, #doors-empty");
+      if (emptyEl) emptyEl.hidden = total > 0;
+
       var wallCount = document.getElementById("wall-count");
       if (wallCount && mode === "all") wallCount.textContent = total + (total === 1 ? " door" : " doors");
       var doorsCount = document.getElementById("doors-count");
-      if (doorsCount && mode.indexOf("newest") === 0) doorsCount.textContent = "showing " + total + " doors here.";
+      if (doorsCount && mode.indexOf("newest") === 0 && total > 0) doorsCount.textContent = "showing " + total + " doors here.";
 
       updatePoolLabel();
     }

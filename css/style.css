@@ -636,42 +636,6 @@ footer.site-foot::before{
 .button-wall a:hover img{ transform: translateY(-2px); box-shadow: var(--shadow-1); }
 .button-wall a:focus-visible{ outline:3px solid var(--red); outline-offset:2px; }
 
-/* badge-embed: placeholder swapped for an inlined <svg> by js/badges.js.
-   inlining (rather than <img src>) is what lets the badge's own internal
-   animation actually run — a referenced SVG image never animates. */
-.badge-embed{ display:block; width:88px; height:31px; }
-.badge-embed:empty{ border:1px solid var(--ink-line); background: var(--paper-2); }
-.badge-embed svg{ display:block; width:88px; height:31px; }
-.button-wall a:hover .badge-embed{ transform: translateY(-2px); }
-.button-wall a{ transition: transform .12s ease; }
-
-.badge-icon{ transform-box: fill-box; transform-origin: 50% 50%; }
-@keyframes badge-wiggle{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(-8deg); } }
-@keyframes badge-pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.16); } }
-@keyframes badge-spin{ to{ transform:rotate(360deg); } }
-@keyframes badge-shake{
-  0%,100%{ transform:translateX(0) rotate(0deg); }
-  20%{ transform:translateX(-1px) rotate(-6deg); }
-  40%{ transform:translateX(1px) rotate(6deg); }
-  60%{ transform:translateX(-1px) rotate(-4deg); }
-  80%{ transform:translateX(1px) rotate(4deg); }
-}
-@keyframes badge-float{ 0%{ transform:translateY(0); opacity:.9; } 100%{ transform:translateY(-4px); opacity:0; } }
-
-.button-wall li:nth-child(1) .badge-icon{ animation: badge-wiggle 2.6s ease-in-out infinite; }
-.button-wall li:nth-child(2) .badge-icon circle{ animation: badge-float 1.8s ease-in infinite; transform-box: fill-box; transform-origin:50% 50%; }
-.button-wall li:nth-child(2) .badge-icon circle:nth-of-type(2){ animation-delay: .6s; }
-.button-wall li:nth-child(3) .badge-icon{ animation: badge-pulse 1.4s ease-in-out infinite; }
-.button-wall li:nth-child(4) .badge-icon{ animation: badge-pulse 2.4s ease-in-out infinite; }
-.button-wall li:nth-child(5) .badge-icon{ animation: badge-shake 2.6s ease-in-out infinite; }
-.button-wall li:nth-child(6) .badge-icon{ animation: badge-pulse 3s ease-in-out infinite; }
-.button-wall li:nth-child(7) .badge-icon{ animation: badge-wiggle 3.2s ease-in-out infinite; }
-.button-wall li:nth-child(8) .badge-icon{ animation: badge-spin 4s linear infinite; }
-
-@media (prefers-reduced-motion: reduce){
-  .badge-icon, .badge-icon *{ animation: none !important; }
-}
-
 .random-link-box{
   display:flex; flex-wrap:wrap; align-items:center; gap: var(--space-4);
 }
