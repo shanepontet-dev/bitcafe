@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>back office · bit cafe</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the back office</a>
+<svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
+  <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">back office</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="btn btn-teal" href="../index.html">« view site</a>
+        <button id="logout-btn" class="btn" type="button">log out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head">
+    <p class="counter-intro" data-print>everything that runs the site, in one place: write an article, check the wall requests, swap what's playing at movie night.</p>
+
+    <nav class="admin-tabs" aria-label="admin sections">
+      <button class="btn is-active" data-tab="articles" type="button">articles</button>
+      <button class="btn" data-tab="submissions" type="button">wall requests</button>
+      <button class="btn" data-tab="movies" type="button">movie night</button>
+    </nav>
+
+    <section id="panel-articles" class="admin-panel">
+      <div class="ticket ticket-torn">
+        <div class="ticket-head">
+          <span>the reading menu</span>
+          <span id="articles-count">-- articles</span>
+        </div>
+
+        <div id="articles-offline" class="notice offline" hidden></div>
+
+        <button id="article-new-btn" class="btn btn-red" type="button">+ write a new article</button>
+
+        <form id="article-form" class="admin-form" hidden>
+          <input type="hidden" id="article-id">
+          <div class="field-row">
+            <div class="field">
+              <label for="article-title">title</label>
+              <input type="text" id="article-title" maxlength="120" required autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="article-byline">byline</label>
+              <input type="text" id="article-byline" maxlength="60" placeholder="fletcher" autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="article-dek">dek (one-line teaser, shown on the reading menu)</label>
+            <input type="text" id="article-dek" maxlength="200" required autocomplete="off">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="article-slug">url slug</label>
+              <input type="text" id="article-slug" maxlength="80" placeholder="auto from title if left blank" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="article-read-minutes">read time (minutes)</label>
+              <input type="number" id="article-read-minutes" min="1" max="60" value="5">
+            </div>
+          </div>
+          <div class="field">
+            <label for="article-body">body — leave a blank line between paragraphs</label>
+            <textarea id="article-body" rows="10" required></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="article-pull-quote">pull quote (optional)</label>
+              <input type="text" id="article-pull-quote" maxlength="400" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="article-pull-cite">pull quote credit (optional)</label>
+              <input type="text" id="article-pull-cite" maxlength="100" autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="article-published" style="display:inline-flex; align-items:center; gap:.5em;">
+              <input type="checkbox" id="article-published" checked style="width:auto;">
+              published (visible on the reading menu)
+            </label>
+          </div>
+          <p id="article-form-error" class="notice offline" hidden></p>
+          <div class="field-row">
+            <button class="btn btn-red" type="submit" id="article-save-btn">save article</button>
+            <button class="btn" type="button" id="article-cancel-btn">cancel</button>
+          </div>
+        </form>
+
+        <p id="articles-empty" class="gb-empty" hidden>no articles yet — write the first one above.</p>
+        <ul id="articles-list" class="gb-list"></ul>
+      </div>
+    </section>
+
+    <section id="panel-submissions" class="admin-panel" hidden>
+      <div class="ticket ticket-torn">
+        <div class="ticket-head">
+          <span>wall requests</span>
+          <span id="submissions-count">-- pending</span>
+        </div>
+        <div id="submissions-offline" class="notice offline" hidden></div>
+        <p class="hint">these came in through the webring's "request a spot" form on <code>links.html</code>. add ones you like to the button wall by hand (see <code>README.md</code>); dismiss the rest.</p>
+        <p id="submissions-empty" class="gb-empty" hidden>no requests waiting.</p>
+        <ul id="submissions-list" class="gb-list"></ul>
+      </div>
+    </section>
+
+    <section id="panel-movies" class="admin-panel" hidden>
+      <div class="ticket ticket-torn">
+        <div class="ticket-head">
+          <span>movie night</span>
+          <span id="movies-count">-- screenings</span>
+        </div>
+
+        <div id="movies-offline" class="notice offline" hidden></div>
+
+        <div class="storage-meter">
+          <div class="storage-meter-head">
+            <span>R2 storage used</span>
+            <span id="storage-meter-label">-- / --</span>
+          </div>
+          <div class="storage-meter-bar"><div id="storage-meter-fill" class="storage-meter-fill"></div></div>
+          <p class="hint">the free tier caps out at 10GB. delete a screening below before uploading a new one if you're close.</p>
+        </div>
+
+        <button id="movie-new-btn" class="btn btn-red" type="button">+ add a screening</button>
+
+        <form id="movie-form" class="admin-form" hidden>
+          <input type="hidden" id="movie-id">
+          <div class="field-row">
+            <div class="field">
+              <label for="movie-title">title</label>
+              <input type="text" id="movie-title" maxlength="120" required autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="movie-year">year</label>
+              <input type="number" id="movie-year" min="1888" max="2100" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="movie-rating">rating</label>
+              <input type="text" id="movie-rating" maxlength="20" placeholder="e.g. 8.0/10 IMDb" autocomplete="off">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="movie-director">director</label>
+              <input type="text" id="movie-director" maxlength="120" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="movie-writer">writer</label>
+              <input type="text" id="movie-writer" maxlength="200" autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="movie-stars">stars</label>
+            <input type="text" id="movie-stars" maxlength="300" placeholder="comma-separated" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="movie-synopsis">synopsis</label>
+            <textarea id="movie-synopsis" rows="4" maxlength="600" required></textarea>
+          </div>
+          <div id="movie-file-fields" class="field-row">
+            <div class="field">
+              <label for="movie-poster-file">poster image</label>
+              <input type="file" id="movie-poster-file" accept="image/*">
+            </div>
+            <div class="field">
+              <label for="movie-video-file">video file</label>
+              <input type="file" id="movie-video-file" accept="video/*">
+            </div>
+          </div>
+          <p id="movie-edit-hint" class="hint" hidden>the poster and video file for an existing screening can't be swapped here — delete this screening and add it again if you need to replace the file.</p>
+          <div class="field">
+            <label for="movie-published" style="display:inline-flex; align-items:center; gap:.5em;">
+              <input type="checkbox" id="movie-published" checked style="width:auto;">
+              published (visible on movie night)
+            </label>
+          </div>
+
+          <div id="movie-upload-progress" class="upload-progress" hidden>
+            <div class="storage-meter-bar"><div id="movie-upload-fill" class="storage-meter-fill"></div></div>
+            <span id="movie-upload-label" class="char-count">uploading… 0%</span>
+          </div>
+
+          <p id="movie-form-error" class="notice offline" hidden></p>
+          <div class="field-row">
+            <button class="btn btn-red" type="submit" id="movie-save-btn">save screening</button>
+            <button class="btn" type="button" id="movie-cancel-btn">cancel</button>
+          </div>
+        </form>
+
+        <p id="movies-empty" class="gb-empty" hidden>no screenings yet — add one above.</p>
+        <ul id="movies-list" class="gb-list"></ul>
+      </div>
+    </section>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p style="margin:0">printed at <span id="clock">--:--:--</span> your local time. back office, staff only.</p>
+  </div>
+</footer>
+
+<script src="../js/common.js"></script>
+<script type="module" src="js/admin-auth.js"></script>
+<script type="module" src="js/admin-tabs.js"></script>
+<script type="module" src="js/admin-articles.js"></script>
+<script type="module" src="js/admin-submissions.js"></script>
+<script type="module" src="js/admin-movies.js"></script>
+</body>
+</html>

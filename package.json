@@ -1,0 +1,14 @@
+{
+  "name": "bitcafe-admin-functions",
+  "private": true,
+  "description": "The public site itself is still plain HTML/CSS/JS with no build step. This package.json exists only for the /admin backend: wrangler deploys worker/index.js (see wrangler.jsonc), and aws4fetch signs presigned R2 upload URLs.",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "aws4fetch": "^1.0.20"
+  },
+  "devDependencies": {
+    "wrangler": "^4.120.0"
+  }
+}

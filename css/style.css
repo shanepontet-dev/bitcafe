@@ -121,7 +121,6 @@ button{ font-family:inherit; }
 .masthead-bar{
   display:flex; align-items:center; justify-content:space-between; gap: var(--space-4);
   flex-wrap:wrap;
-  border-bottom: 2px solid var(--ink);
   padding-bottom: var(--space-3);
 }
 .brand{
@@ -299,6 +298,7 @@ nav.primary-nav a[aria-current="page"]::before{ content:"» "; color: var(--red)
 .badge-photo{
   width:4rem; height:4rem; display:block;
   border: 2px solid var(--ink-line);
+  object-fit:cover;
 }
 .badge-name{ font-family: var(--font-display); font-weight:800; font-size:.85rem; }
 .badge-role{ font-family: var(--font-display); font-size:.65rem; letter-spacing:.06em; text-transform:uppercase; color: var(--ink-faint); }
@@ -826,6 +826,47 @@ footer.site-foot::before{
 /* ---- 404 -----------------------------------------------------------------------*/
 .notfound-ticket{ max-width: 34rem; margin: var(--space-7) auto; text-align:center; }
 .notfound-code{ font-family: var(--font-display); font-size: clamp(3rem, 2rem + 4vw, 5rem); color: var(--red); font-weight:800; line-height:1; }
+
+/* ---- admin (/admin) ------------------------------------------------*/
+/* the back-office dashboard reuses the site's existing ticket/list/form
+   vocabulary end to end (.ticket, .gb-list/.gb-entry, .field, .stamp —
+   see notices.html for the list pattern this borrows). everything
+   below is new only because nothing quite like a tab row, a usage
+   meter, or a per-row action group existed anywhere else on the site. */
+.admin-tabs{
+  display:flex; flex-wrap:wrap; gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.admin-tabs .btn.is-active{
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+}
+.admin-panel[hidden]{ display:none; }
+
+.admin-form{
+  margin: var(--space-5) 0; padding: var(--space-4);
+  background: var(--paper-2); border:1px dashed var(--ink-line);
+}
+.admin-row-actions{
+  display:flex; flex-wrap:wrap; gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.storage-meter{ margin: var(--space-4) 0 var(--space-5); }
+.storage-meter-head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  font-family: var(--font-display); font-size:.78rem; letter-spacing:.04em;
+  margin-bottom: var(--space-2);
+}
+.storage-meter-bar{
+  height:.6rem; background: var(--paper); border:2px solid var(--ink);
+}
+.storage-meter-fill{
+  height:100%; background: var(--teal); width:0%;
+  transition: width .3s ease;
+}
+.storage-meter-fill.is-hot{ background: var(--red); }
+.upload-progress{ margin: var(--space-3) 0; }
+.upload-progress .char-count{ display:block; margin-top:.35em; }
 
 /* ---- utility -----------------------------------------------------------*/
 .sr-only{

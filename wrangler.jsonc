@@ -1,0 +1,27 @@
+{
+  // bit cafe deploys as a Cloudflare Worker with static assets: the
+  // whole repo root is served as static files (every public page,
+  // /admin's own HTML/CSS/JS), except /api/admin/* -- run_worker_first
+  // sends just that path prefix to worker/index.js instead. see the
+  // comment at the top of that file for why /functions isn't
+  // auto-routed the way it would be under the older Pages product.
+  "name": "bitcafe",
+  "compatibility_date": "2026-08-08",
+  "main": "worker/index.js",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/admin/*"]
+  },
+  "r2_buckets": [
+    {
+      // not a secret -- the bucket name and binding variable name are
+      // fine to commit. the credentials that can actually read/write
+      // it (R2_ACCESS_KEY_ID etc., used only for presigning uploads)
+      // are set as dashboard secrets, never here. see README.md, "the
+      // back office (/admin)".
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "bitcafe-media"
+    }
+  ]
+}

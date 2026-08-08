@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>staff door · bit cafe</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the door</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head" style="max-width:28rem; margin-left:auto; margin-right:auto;">
+    <p class="counter-intro" data-print>the public rooms are through the front. this door needs a password.</p>
+
+    <div class="ticket ticket-torn">
+      <div class="ticket-head">
+        <span>staff door</span>
+        <span>employees only</span>
+      </div>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="login-password">password</label>
+          <input type="password" id="login-password" autocomplete="current-password" required autofocus>
+        </div>
+        <p id="login-error" class="notice offline" hidden></p>
+        <button id="login-submit" class="btn btn-red btn-block" type="submit">clock in →</button>
+      </form>
+    </div>
+
+    <p class="hint center" style="margin-top:var(--space-4);"><a href="../index.html">« back to the counter</a></p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p style="margin:0">printed at <span id="clock">--:--:--</span> your local time.</p>
+  </div>
+</footer>
+
+<script src="../js/common.js"></script>
+<script type="module" src="js/admin-auth.js"></script>
+</body>
+</html>

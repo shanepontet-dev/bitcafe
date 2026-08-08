@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>articles · bit cafe</title>
-<meta name="description" content="the bit cafe house zine: short essays on dial-up nostalgia, webrings, ascii art, and late-night chatrooms, written by dot_matrix.">
+<title>article · bit cafe</title>
+<meta name="description" content="a bit cafe article.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<a class="skip-link" href="#main">skip to the menu</a>
+<a class="skip-link" href="#main">skip to the article</a>
 <svg class="sr-only" aria-hidden="true" width="0" height="0" focusable="false">
   <filter id="inkbleed" x="-30%" y="-30%" width="160%" height="160%">
     <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
@@ -50,26 +50,39 @@
 </header>
 
 <main id="main">
-  <section class="wrap hero-counter">
-    <p class="counter-intro" data-print>the house zine. five slips on the rack today: order whichever one catches your eye, dot_matrix restocks when the mood strikes.</p>
-
-    <div class="ticket ticket-torn" aria-labelledby="menu-heading">
+  <article class="wrap section-head" id="article-root">
+    <div class="ticket ticket-torn article-ticket">
       <div class="ticket-head">
-        <span id="menu-heading">bit cafe · reading menu</span>
+        <span>articles</span>
         <span data-ticket-number>№ ----</span>
       </div>
 
-      <div id="menu-offline" class="notice offline" hidden>
-        <strong>the reading menu isn't wired up yet.</strong> this needs the same Supabase project as chat/guestbook connected. if you're the site owner, see <code>README.md</code>, "connecting the till."
+      <div id="article-offline" class="notice offline" hidden>
+        <strong>this article isn't loading yet.</strong> either the reading menu isn't wired up to Supabase (see <code>README.md</code>, "connecting the till"), or there's no <code>?slug=</code> in the address bar to look up.
       </div>
-      <p id="menu-empty" class="hint center" hidden>the rack's empty right now. check back soon.</p>
+      <div id="article-notfound" class="notice offline" hidden>
+        <strong>no article by that name.</strong> it may have been unpublished or deleted. <a href="articles.html">back to the reading menu →</a>
+      </div>
 
-      <ol class="order-board" id="order-board"></ol>
+      <div id="article-content" hidden>
+        <p class="article-meta" id="article-meta"></p>
+        <h1 id="article-title"></h1>
 
-      <hr class="tearline">
-      <p class="hint center">that's the whole rack for now. new slips get pinned to the counter, not pushed to a feed.</p>
+        <div class="article-body" id="article-body"></div>
+
+        <hr class="tearline">
+        <div class="article-foot">
+          <button class="btn print-btn" onclick="window.print()" type="button">print this ticket</button>
+          <a class="btn btn-red" href="articles.html">back to the rack →</a>
+        </div>
+      </div>
     </div>
-  </section>
+  </article>
+
+  <nav class="article-nav" aria-label="more articles" id="article-nav" hidden>
+    <a class="prev" id="article-nav-prev"><span class="dir"></span></a>
+    <a class="next" id="article-nav-next"><span class="dir"></span></a>
+  </nav>
 </main>
 
 <footer class="site-foot">
