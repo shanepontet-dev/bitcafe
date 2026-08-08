@@ -54,7 +54,10 @@ silently failing.
      `movies` tables `/admin` manages. optionally follow it with
      [`supabase/003_seed_content.sql`](supabase/003_seed_content.sql),
      which loads the site's original 5 articles and 2 movies as real
-     rows instead of starting the dashboard from empty.
+     rows instead of starting the dashboard from empty. then run
+     [`supabase/004_webring_content.sql`](supabase/004_webring_content.sql),
+     which adds the `featured_sites` and `wall_buttons` tables behind
+     `/admin`'s webring tab.
 3. open **Project settings → API**. you need two values: the **Project
    URL** and the **anon public** key (not the `service_role` key — that
    one's secret and never belongs in client code).
@@ -77,11 +80,16 @@ write, but not anything. each table has RLS turned on plus:
 - `site_submissions` (the "request a spot on the wall" form on
   `links.html`) is **insert-only** from the client on purpose — no select
   policy is granted at all, so anyone can file a request but nobody can
-  read the list back through the app. you'll read them yourself in the
-  Supabase dashboard's **Table Editor**, which always has full access
-  regardless of these policies. requests are never published
-  automatically; the button wall only grows when you hand-edit
-  `links.html` after reading one you like.
+  read the list back through the app. `/admin`'s webring tab reads and
+  dismisses them for you now (see below); nothing in that table is
+  ever published automatically — filing one just gets it in front of
+  fletcher, who adds it to the wall by hand (through `/admin`, not by
+  editing HTML) if it's a good fit.
+- `featured_sites` and `wall_buttons` (the "sites we love" coupon strip
+  and the button wall's uploaded badges, both on `links.html`, `/admin`'s
+  webring tab manages both) work like `articles`/`movies` below: the anon
+  key gets read-only access to published rows, and every write goes
+  through the Worker with the service_role key instead.
 
 realtime is enabled (via `supabase_realtime` publication, at the bottom
 of the schema file) for `chat_messages`, `guestbook_entries`, and
@@ -107,10 +115,12 @@ entry.
 
 `/admin` is a real login-gated dashboard: write and edit articles (they
 render at `article.html?slug=...`, replacing what used to be 5 separate
-hand-written files under `articles/`), read and dismiss webring "request
-a spot" pitches (`site_submissions` — previously only visible in the
-Supabase Table Editor), and add, reorder, or delete movie night's
-screenings, including the video file itself. a screening's video can
+hand-written files under `articles/`); manage the webring — add, reorder,
+or delete "sites we love" coupons and button-wall badges (upload the
+artwork right there, no hand-editing `links.html`), and read and dismiss
+webring "request a spot" pitches (`site_submissions` — previously only
+visible in the Supabase Table Editor); and add, reorder, or delete movie
+night's screenings, including the video file itself. a screening's video can
 either be uploaded (the usual case) or just linked to a direct file URL
 hosted somewhere else — either way, pasting an IMDb link into the movie
 form fills in title/year/rating/director/writer/stars/synopsis/poster
@@ -178,10 +188,11 @@ actual endpoint logic.
    | `OMDB_API_KEY` | optional — powers the "fill in from IMDb" button on the movie form. free at [omdbapi.com/apikey.aspx](https://www.omdbapi.com/apikey.aspx) (1,000 requests/day). skip it and that button just shows an error; everything else in `/admin` works without it |
 
 5. **run the database migrations** — see "connecting the till" above
-   (`002_articles_movies.sql`, then optionally `003_seed_content.sql`).
+   (`002_articles_movies.sql`, then optionally `003_seed_content.sql`,
+   then `004_webring_content.sql`).
 6. visit `https://<project>.<your-subdomain>.workers.dev/admin/`, log
    in with `ADMIN_PASSWORD`, and confirm you can see the
-   articles/movies/wall requests tabs.
+   articles/webring/movie night tabs.
 
 losing `SESSION_SECRET` (or deliberately rotating it) instantly logs
 everyone out — that's the "kill switch" if you ever suspect a session
@@ -244,7 +255,8 @@ fishing.html            gone fishin': cast, reel in, take the fish; pays
                         out bits, spendable on coffee
 chat.html               live chatroom (needs Supabase, see above)
 guestbook.html          guestbook (needs Supabase, see above)
-links.html              webring: featured sites, an 88x31 button wall,
+links.html              webring: featured sites, an 88x31 button wall
+                        (both admin-managed on top of hand-written picks),
                         a random-link door, and a "request a spot" form
 notices.html            the notice board: pinned updates + visitor pins
 movie-night.html        video screenings (admin-managed), linked from the notice board
@@ -255,7 +267,8 @@ js/common.js            clock, print-reveal effect, ticket numbers, the
                         shared bits balance + coin-purse rendering
 js/chat.js              chatroom logic (Supabase Postgres + realtime)
 js/guestbook.js         guestbook logic (Supabase Postgres + realtime)
-js/webring.js           random-link door + site-submission form (Supabase)
+js/webring.js           random-link door, site-submission form, and rendering
+                        admin-added featured sites/wall buttons (Supabase)
 js/notices.js           notice board logic (Supabase Postgres + realtime)
 js/articles.js          reading menu list + single-article rendering (Supabase)
 js/movie-night.js       screening list rendering + video player controls
@@ -266,9 +279,10 @@ js/supabase-config.js   your database keys go here
 supabase/schema.sql               original tables: chat, guestbook, notices, site_submissions
 supabase/002_articles_movies.sql  adds the articles/movies tables /admin manages
 supabase/003_seed_content.sql     optional: loads the original 5 articles + 2 movies as rows
+supabase/004_webring_content.sql  adds the featured_sites/wall_buttons tables /admin manages
 admin/index.html        the /admin login page
-admin/dashboard.html    the back office: articles / wall requests / movie night tabs
-admin/js/*.js           dashboard logic, one file per tab + shared auth helpers
+admin/dashboard.html    the back office: articles / webring / movie night tabs
+admin/js/*.js           dashboard logic, one file per panel + shared auth/reorder helpers
 wrangler.jsonc          Cloudflare Worker config: static assets + the R2 binding
                         (see "the back office" above for how this gets deployed)
 .assetsignore           keeps functions/, worker/, node_modules/, etc. out of the

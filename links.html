@@ -56,7 +56,7 @@
     <div class="ticket ticket-perf-bottom">
       <div class="ticket-head">
         <span>bit cafe · random door</span>
-        <span>picks from 8</span>
+        <span id="random-pool-count">picks from 8</span>
       </div>
       <div class="random-link-box">
         <button id="random-link-btn" class="btn btn-teal" type="button">wander somewhere random →</button>
@@ -70,7 +70,7 @@
         <span data-ticket-number>№ ----</span>
       </div>
 
-      <div class="coupon-strip">
+      <div class="coupon-strip" data-featured-sites="all">
         <div class="coupon">
           <h3>melonland</h3>
           <p>one of the loudest, funniest personal pages left on the internet. glorious chaos, run with real love. this is a lot of where bit cafe's nerve came from.</p>
@@ -112,10 +112,10 @@
     <div class="ticket ticket-torn">
       <div class="ticket-head">
         <span id="wall-heading">bit cafe · the button wall</span>
-        <span>8 doors</span>
+        <span id="wall-count">8 doors</span>
       </div>
-      <p class="hint mt-0">hand-made badges, each one its own color, layout and little animated icon, the way a real button wall looks: not the sites' own art (we don't have their files, and wouldn't reuse them without asking), just tribute buttons bit cafe drew and animated itself. every one of them actually goes there.</p>
-      <ul class="button-wall">
+      <p class="hint mt-0">hand-made badges, each one its own color, layout and little animated icon, the way a real button wall looks: not the sites' own art (we don't have their files, and wouldn't reuse them without asking), just tribute buttons bit cafe drew and animated itself, plus any button art fletcher's uploaded by hand from the back office. every one of them actually goes there.</p>
+      <ul class="button-wall" data-wall-buttons="all">
         <li><a href="https://melonking.net" target="_blank" rel="noopener"><span class="badge-embed" data-badge="melonland" data-label="melonland · visit melonking.net"></span></a></li>
         <li><a href="https://ribo.zone/links" target="_blank" rel="noopener"><span class="badge-embed" data-badge="ribo" data-label="ribo.zone · visit ribo.zone/links"></span></a></li>
         <li><a href="https://lostletters.neocities.org" target="_blank" rel="noopener"><span class="badge-embed" data-badge="lostletters" data-label="lost letters · visit lostletters.neocities.org"></span></a></li>

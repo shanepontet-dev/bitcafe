@@ -910,6 +910,11 @@ footer.site-foot::before{
    draggable trigger (see admin-movies.js's wireDrag) so grabbing the
    title text or clicking edit/delete never starts a drag. */
 .gb-entry-left{ display:flex; align-items:center; gap: var(--space-3); min-width:0; }
+.gb-entry-thumb{
+  flex:none; display:block; max-width:88px; max-height:31px;
+  border:1px solid var(--ink-line); background: var(--paper-2);
+  image-rendering: pixelated;
+}
 .gb-drag-handle{
   flex:none; width:1.8em; height:1.8em; line-height:1;
   display:inline-flex; align-items:center; justify-content:center;

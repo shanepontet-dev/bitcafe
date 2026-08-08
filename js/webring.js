@@ -79,3 +79,142 @@ var RANDOM_POOL = [
     if (offline) offline.hidden = false;
   });
 })();
+
+// the button wall's admin-uploaded buttons (js/admin-wall-buttons.js,
+// stored in the wall_buttons table) -- appended after whichever
+// hand-authored badges already sit in the page's own markup, never
+// replacing them. links.html's wall shows every published button
+// (data-wall-buttons="all"); index.html's "a few doors out" teaser
+// shows only the newest few (data-wall-buttons="newest:N"). both
+// pages' <ul class="button-wall"> already exist in the static HTML,
+// so this only ever adds <li>s to what's already on screen.
+(function renderWallButtons() {
+  var lists = document.querySelectorAll(".button-wall[data-wall-buttons]");
+  if (!lists.length) return;
+
+  function buildBadge(row) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = row.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    var img = document.createElement("img");
+    img.src = row.image_url;
+    img.width = 88;
+    img.height = 31;
+    img.loading = "lazy";
+    img.alt = row.site_name + (row.tagline ? " · " + row.tagline : "");
+    a.appendChild(img);
+    li.appendChild(a);
+    return li;
+  }
+
+  function updatePoolLabel() {
+    var poolLabel = document.getElementById("random-pool-count");
+    if (poolLabel) poolLabel.textContent = "picks from " + RANDOM_POOL.length;
+  }
+
+  async function boot() {
+    if (!isConfigured(supabaseConfig)) return;
+    const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+    var supabase = createClient(supabaseConfig.url, supabaseConfig.anonKey);
+
+    for (var i = 0; i < lists.length; i++) {
+      var list = lists[i];
+      var mode = list.dataset.wallButtons; // "all" or "newest:N"
+      var staticCount = list.children.length;
+
+      var query = supabase
+        .from("wall_buttons")
+        .select("site_name, url, tagline, image_url, created_at")
+        .eq("published", true);
+
+      if (mode.indexOf("newest") === 0) {
+        var limit = parseInt(mode.split(":")[1], 10) || 10;
+        query = query.order("created_at", { ascending: false }).limit(limit);
+      } else {
+        query = query.order("sort_order", { ascending: true }).order("created_at", { ascending: true });
+      }
+
+      var { data, error } = await query;
+      if (error || !data || !data.length) continue;
+
+      data.forEach(function (row) {
+        list.appendChild(buildBadge(row));
+        if (RANDOM_POOL.indexOf(row.url) === -1) RANDOM_POOL.push(row.url);
+      });
+
+      var total = staticCount + data.length;
+      var wallCount = document.getElementById("wall-count");
+      if (wallCount && mode === "all") wallCount.textContent = total + (total === 1 ? " door" : " doors");
+      var doorsCount = document.getElementById("doors-count");
+      if (doorsCount && mode.indexOf("newest") === 0) doorsCount.textContent = "showing " + total + " doors here.";
+
+      updatePoolLabel();
+    }
+  }
+
+  boot().catch(function (err) {
+    console.error("bit cafe button wall failed to load:", err);
+  });
+})();
+
+// "sites we love" admin-uploaded picks (js/admin-featured-sites.js,
+// stored in the featured_sites table) -- appended after links.html's
+// own hand-written coupons, same append-only spirit as the button
+// wall above.
+(function renderFeaturedSites() {
+  var strips = document.querySelectorAll(".coupon-strip[data-featured-sites]");
+  if (!strips.length) return;
+
+  function buildCoupon(row) {
+    var div = document.createElement("div");
+    div.className = "coupon";
+    var h3 = document.createElement("h3");
+    h3.textContent = row.site_name;
+    var p = document.createElement("p");
+    p.textContent = row.description;
+    var a = document.createElement("a");
+    a.className = "btn" + (row.button_style === "red" ? " btn-red" : row.button_style === "teal" ? " btn-teal" : "");
+    a.href = row.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "visit " + row.url.replace(/^https?:\/\//i, "").replace(/\/$/, "") + " →";
+    div.append(h3, p, a);
+    return div;
+  }
+
+  function updatePoolLabel() {
+    var poolLabel = document.getElementById("random-pool-count");
+    if (poolLabel) poolLabel.textContent = "picks from " + RANDOM_POOL.length;
+  }
+
+  async function boot() {
+    if (!isConfigured(supabaseConfig)) return;
+    const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+    var supabase = createClient(supabaseConfig.url, supabaseConfig.anonKey);
+
+    for (var i = 0; i < strips.length; i++) {
+      var strip = strips[i];
+      var { data, error } = await supabase
+        .from("featured_sites")
+        .select("site_name, url, description, button_style")
+        .eq("published", true)
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: true });
+
+      if (error || !data || !data.length) continue;
+
+      data.forEach(function (row) {
+        strip.appendChild(buildCoupon(row));
+        if (RANDOM_POOL.indexOf(row.url) === -1) RANDOM_POOL.push(row.url);
+      });
+
+      updatePoolLabel();
+    }
+  }
+
+  boot().catch(function (err) {
+    console.error("bit cafe featured sites failed to load:", err);
+  });
+})();

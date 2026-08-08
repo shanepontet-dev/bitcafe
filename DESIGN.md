@@ -182,6 +182,8 @@ A hand-mapped 28×28 sprite (`canvas`, 6px cells, `image-rendering: pixelated`) 
 ### Button Wall (signature component)
 A wrapped row of hand-authored 88×31 badges (`links.html`, plus a 4-up teaser on the homepage), each built from the same template as the site's own outbound badge: a dark Martian Mono title bar, a Courier Prime tagline, a status dot alternating red/teal for rhythm. These are tribute badges bit cafe made itself for sites it links to — never a scraped or re-hosted copy of another site's actual button art. A "wander somewhere random" control sits beside the wall and opens a random pick from the same linked-site pool in a new tab; treat it as part of this component, not a separate button style.
 
+The wall also has a second, admin-managed tier: uploaded button art added from `/admin`'s webring tab (`wall_buttons`, see README.md), appended after the hand-authored badges above rather than replacing them. Those images render plain, at the same 88×31 footprint, with no inline animation and no title-bar/tagline template — the "Don't re-host" rule below still applies to them: they're expected to be art fletcher actually drew or has rights to, not a copy of the linked site's own logo.
+
 ## Do's and Don'ts
 
 ### Do:
