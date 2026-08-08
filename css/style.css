@@ -902,6 +902,25 @@ footer.site-foot::before{
   margin-top: var(--space-3);
 }
 
+.imdb-fetch-row{ display:flex; gap: var(--space-3); }
+.imdb-fetch-row input{ flex:1 1 auto; }
+.imdb-fetch-row .btn{ flex:none; }
+
+/* drag-to-reorder on the movie-night list -- the handle is the only
+   draggable trigger (see admin-movies.js's wireDrag) so grabbing the
+   title text or clicking edit/delete never starts a drag. */
+.gb-entry-left{ display:flex; align-items:center; gap: var(--space-3); min-width:0; }
+.gb-drag-handle{
+  flex:none; width:1.8em; height:1.8em; line-height:1;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:1.05rem; color: var(--ink-soft);
+  background: var(--paper-2); border:1px solid var(--ink-line);
+  cursor:grab; padding:0;
+}
+.gb-drag-handle:hover{ color: var(--ink); border-color: var(--ink); }
+.gb-drag-handle:active{ cursor:grabbing; }
+.gb-entry.is-dragging{ opacity:.4; }
+
 .storage-meter{ margin: var(--space-4) 0 var(--space-5); }
 .storage-meter-head{
   display:flex; justify-content:space-between; align-items:baseline;
