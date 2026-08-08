@@ -263,11 +263,62 @@ nav.primary-nav a[aria-current="page"]::before{ content:"» "; color: var(--red)
 .stamp.small{ font-size:.62rem; padding:.4em .7em; }
 
 /* ---- homepage specifics ---------------------------------------------*/
-.hero-counter{ padding-top: var(--space-6); }
+.hero-counter{ padding-top: var(--space-7); }
+@media (max-width: 640px){
+  /* .wrap.hero-counter (not just .hero-counter): the generic mobile
+     ".wrap{ padding: 0 var(--space-4) }" reset further down the
+     stylesheet has equal specificity and comes later, so it was
+     silently winning the padding-top tug-of-war and undoing this. the
+     compound selector outranks it regardless of source order. nav
+     wraps to two rows on phone, which already eats vertical space, but
+     the gap before "welcome in..." still read as tighter than desktop
+     -- give it a bit more room here specifically. */
+  .wrap.hero-counter{ padding-top: var(--space-8); }
+}
 .counter-intro{
   font-family: var(--font-body); font-style: italic;
   color: var(--ink-soft); font-size: 1.05rem;
   max-width: 52ch;
+}
+/* fletcher, pinned above the order-board ticket -- decorative only (he's
+   introduced properly, with real alt text, down in the about-counter
+   ticket), so both copies below are aria-hidden. two different crops
+   for two different layouts rather than one element reflowing awkwardly
+   between them:
+   - phone: a plain in-flow image, left-aligned, under the welcome line
+   - wider: pinned to the top of the ticket itself (it's the ticket's own
+     first child) with bottom:100%, so its bottom edge always sits flush
+     with the ticket's top edge no matter how many lines the intro
+     wraps to, and a z-index above the ticket so it reads in front. */
+.hero-photo{ display:block; height:auto; pointer-events:none; user-select:none; }
+
+.hero-photo-mobile{
+  width: clamp(6rem, 32vw, 8.5rem);
+  margin: var(--space-4) 0 0;
+}
+.hero-photo-desktop{ display:none; }
+
+@media (max-width: 640px){
+  /* .hero-photo-mobile sits directly in flow right before the ticket --
+     zero the ticket's usual top margin so its bottom edge actually
+     touches the ticket's top edge, same rule as the desktop anchor
+     above just done in-flow instead of via bottom:100%. scoped to this
+     breakpoint only: above it .hero-photo-mobile is display:none and
+     the normal paragraph-to-ticket gap should stand. */
+  .hero-photo-mobile + .ticket{ margin-top: 0; }
+}
+
+@media (min-width: 641px){
+  .hero-photo-mobile{ display:none; }
+  .hero-photo-desktop{
+    display:block;
+    position:absolute; bottom:100%; right: var(--space-5);
+    width: clamp(7rem, 14vw, 12rem);
+    z-index:2;
+  }
+  /* reserve room for .hero-photo-desktop (max 12rem wide + margin) so
+     the intro line never wraps underneath it */
+  .counter-intro{ max-width: min(52ch, 100% - 13.5rem); }
 }
 .ticket-close{ margin-top: var(--space-5); }
 
