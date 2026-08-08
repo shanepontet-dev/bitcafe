@@ -920,6 +920,24 @@ footer.site-foot::before{
 .upload-progress{ margin: var(--space-3) 0; }
 .upload-progress .char-count{ display:block; margin-top:.35em; }
 
+/* the button wall's drag-and-drop zone (admin-wall-buttons.js) -- an
+   alternative to "+ add a button", not a replacement for it. */
+.dropzone{
+  margin: var(--space-4) 0;
+  padding: var(--space-5);
+  border: 2px dashed var(--ink-line);
+  background: var(--paper-2);
+  text-align: center;
+}
+.dropzone.is-dragover{ border-color: var(--red); background: var(--paper); }
+.dropzone-hint{ margin:0; font-size:.85rem; color: var(--ink-soft); }
+.dropzone-preview{
+  display:block; margin: 0 auto var(--space-3);
+  max-width:176px; max-height:62px;
+  image-rendering: pixelated;
+  border:1px solid var(--ink-line); background: var(--paper);
+}
+
 /* ---- utility -----------------------------------------------------------*/
 .sr-only{
   position:absolute; width:1px; height:1px; padding:0; margin:-1px;
