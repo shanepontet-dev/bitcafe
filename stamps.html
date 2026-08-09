@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stamp board · bit cafe</title>
+<meta name="description" content="eight pixel postage stamps on a corkboard. drag them around and arrange your own little collection.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">skip to the stamp board</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">bit<span class="dot">·</span>cafe</span>
+        <span class="brand-tag">an internet café for the terminally online</span>
+      </a>
+      <div class="masthead-meta">
+        <span class="status-pill"><span class="led"></span><span class="label">open</span></span>
+        <a class="coin-purse" href="fishing.html" title="your bits — earned by fishing, spent on coffee">
+          <span class="coin" aria-hidden="true"></span>
+          <span class="coin-count"><span data-bits-balance>10</span> bits</span>
+        </a>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="cafe sections">
+      <ul>
+        <li><a href="index.html">counter</a></li>
+        <li><a href="articles.html">articles</a></li>
+        <li><a href="coffee.html">order coffee</a></li>
+        <li><a href="chat.html">chatroom</a></li>
+        <li><a href="guestbook.html">guestbook</a></li>
+        <li><a href="links.html">webring</a></li>
+        <li><a href="notices.html">notices</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap section-head">
+    <p class="counter-intro" data-print>fletcher found a shoebox of loose stamps under the counter and pinned them up before anyone could stop him. drag them wherever you like — this corner of the board is yours.</p>
+
+    <div class="ticket ticket-torn" style="max-width:48rem; margin-left:auto; margin-right:auto;">
+      <div class="ticket-head">
+        <span>bit cafe · stamp board</span>
+        <span data-ticket-number>№ ----</span>
+      </div>
+
+      <div id="stamp-board" class="stamp-board" role="group" aria-label="stamp board: drag a stamp with the mouse or a finger, or tab to one and nudge it with the arrow keys">
+        <button type="button" class="stamp-piece" data-stamp-id="1">
+          <img src="img/layer-1.png" alt="pixel postage stamp: a hooded grey figure against a dark ground" draggable="false">
+        </button>
+        <button type="button" class="stamp-piece" data-stamp-id="2">
+          <img src="img/layer-2.png" alt="pixel postage stamp: a mauve, blocky skyline" draggable="false">
+        </button>
+        <button type="button" class="stamp-piece" data-stamp-id="3">
+          <img src="img/layer-3.png" alt="pixel postage stamp: a bold letter T over a rust-red ground, denomination 20" draggable="false">
+        </button>
+        <button type="button" class="stamp-piece" data-stamp-id="4">
+          <img src="img/layer-4.png" alt="pixel postage stamp: red flowers with green leaves" draggable="false">
+        </button>
+        <button type="button" class="stamp-piece" data-stamp-id="5">
+          <img src="img/layer-5.png" alt="pixel postage stamp: looping letterforms over a diagonal band, orange ground" draggable="false">
+        </button>
+        <button type="button" class="stamp-piece" data-stamp-id="6">
+          <img src="img/layer-6.png" alt="pixel postage stamp: a pale curling shape on a dark maroon ground" draggable="false">
+        </button>
+        <button type="button" class="stamp-piece" data-stamp-id="7">
+          <img src="img/layer-7.png" alt="pixel postage stamp: a green woven-lattice pattern" draggable="false">
+        </button>
+        <button type="button" class="stamp-piece" data-stamp-id="8">
+          <img src="img/layer-8.png" alt="pixel postage stamp: a pale blue outline on navy, small letters along the bottom" draggable="false">
+        </button>
+      </div>
+
+      <div class="stamp-board-controls">
+        <button id="stamp-shuffle" class="btn btn-red" type="button">shuffle the box →</button>
+        <button id="stamp-reset" class="btn" type="button">line them back up →</button>
+      </div>
+      <p class="hint">drag a stamp with the mouse or your finger, or tab to one and nudge it with the arrow keys (hold shift for a bigger step). your arrangement saves locally in this browser — nobody else sees it, and it doesn't move if you clear cookies.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>bit cafe</h4>
+        <p style="margin:0">hand-coded, no frameworks, no tracking, no ads.<br>printed at <span id="clock">--:--:--</span> your local time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>around the café</h4>
+        <ul>
+          <li><a href="articles.html">articles</a></li>
+          <li><a href="coffee.html">order coffee</a></li>
+          <li><a href="chat.html">chatroom</a></li>
+          <li><a href="guestbook.html">guestbook</a></li>
+          <li><a href="links.html">webring</a></li>
+          <li><a href="notices.html">notices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>the small print</h4>
+        <ul>
+          <li>stamps are pixel art, pinned by hand</li>
+          <li>no cookies harmed in the making of this page</li>
+          <li>run by fletcher, since always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/stamps.js"></script>
+</body>
+</html>

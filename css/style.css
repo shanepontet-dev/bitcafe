@@ -851,6 +851,71 @@ footer.site-foot::before{
 .creel-item .bits{ color: var(--teal); white-space:nowrap; }
 .creel-empty{ color: var(--ink-faint); font-style:italic; font-size:.9rem; }
 
+/* ---- stamp board (stamps.html) --------------------------------------------------*/
+/* a loose corkboard of draggable pixel stamps. js/stamps.js drives left/top
+   (percent of the board's own box, so a saved layout still roughly holds up
+   if the board's rendered size changes) and --rot per piece, clamping drags
+   to the board and persisting to localStorage -- same "this browser only"
+   pattern as the coin purse and ticket-number seed in js/common.js. the
+   speckle recipe is the same one .specials-grid.corkboard uses on
+   notices.html, standalone here since this page has no tile grid to hang it
+   on. */
+.stamp-board{
+  position:relative;
+  min-height: 26rem;
+  background-color: var(--paper-2);
+  background-image:
+    radial-gradient(circle at 8% 15%,  rgba(95,93,75,.16) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 62% 6%,  rgba(95,93,75,.13) 0 1.6px, transparent 2px),
+    radial-gradient(circle at 33% 55%, rgba(95,93,75,.17) 0 2.2px, transparent 2.6px),
+    radial-gradient(circle at 88% 40%, rgba(95,93,75,.11) 0 1.8px, transparent 2.2px),
+    radial-gradient(circle at 50% 85%, rgba(95,93,75,.14) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 6% 78%,  rgba(95,93,75,.12) 0 1.6px, transparent 2px),
+    radial-gradient(circle at 94% 88%, rgba(95,93,75,.13) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 22% 35%, rgba(95,93,75,.1)  0 1.4px, transparent 1.8px),
+    radial-gradient(circle at 58% 28%, rgba(95,93,75,.14) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 78% 65%, rgba(95,93,75,.11) 0 1.6px, transparent 2px),
+    radial-gradient(circle at 14% 92%, rgba(95,93,75,.1)  0 1.4px, transparent 1.8px),
+    radial-gradient(circle at 44% 12%, rgba(95,93,75,.12) 0 1.8px, transparent 2.2px);
+  background-size: 160px 160px;
+  border: 2px solid var(--ink);
+  overflow:hidden;
+  touch-action:none; /* pieces drive their own drag; don't let the page try to scroll under a finger */
+}
+.stamp-piece{
+  position:absolute;
+  left:50%; top:50%; /* js/stamps.js sets real left/top the moment it runs */
+  transform: translate(-50%,-50%) rotate(var(--rot, 0deg));
+  width: clamp(76px, 16vw, 100px);
+  margin:0; padding:0; border:0; background:none;
+  cursor: grab;
+  touch-action:none;
+  -webkit-user-select:none; user-select:none;
+  -webkit-touch-callout:none;
+  filter: drop-shadow(0 2px 3px rgba(32,31,25,.35));
+  transition: filter .12s ease;
+}
+.stamp-piece img{
+  width:100%; height:auto; display:block;
+  image-rendering: pixelated;
+  pointer-events:none; /* the button is the drag target, not the image */
+}
+.stamp-piece:hover{ filter: drop-shadow(0 3px 5px rgba(32,31,25,.4)); }
+.stamp-piece:focus-visible{ outline:3px solid var(--red); outline-offset:3px; }
+.stamp-piece.is-dragging{
+  cursor:grabbing;
+  filter: drop-shadow(0 6px 10px rgba(32,31,25,.45));
+  transform: translate(-50%,-50%) rotate(var(--rot,0deg)) scale(1.06);
+  transition:none; /* no lag chasing the pointer mid-drag */
+}
+.stamp-board-controls{
+  display:flex; flex-wrap:wrap; gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+@media (max-width: 640px){
+  .stamp-board{ min-height: 22rem; }
+}
+
 /* ---- 404 -----------------------------------------------------------------------*/
 .notfound-ticket{ max-width: 34rem; margin: var(--space-7) auto; text-align:center; }
 .notfound-code{ font-family: var(--font-display); font-size: clamp(3rem, 2rem + 4vw, 5rem); color: var(--red); font-weight:800; line-height:1; }
