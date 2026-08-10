@@ -6,7 +6,7 @@
 
   var form = document.getElementById("coffee-form");
   var cupStage = document.getElementById("cup-stage");
-  var pixelCupCanvas = document.getElementById("pixel-cup");
+  var pixelCupEl = document.getElementById("pixel-cup");
   var brewPanel = document.getElementById("brew-panel");
   var brewStatus = document.getElementById("brew-status");
   var brewBar = document.getElementById("brew-bar");
@@ -22,8 +22,8 @@
 
   var cupMounted = false;
   function ensureCupMounted() {
-    if (cupMounted || !pixelCupCanvas || !window.PixelCup) return;
-    window.PixelCup.mount(pixelCupCanvas);
+    if (cupMounted || !pixelCupEl || !window.PixelCup) return;
+    window.PixelCup.mount(pixelCupEl);
     cupMounted = true;
   }
 
