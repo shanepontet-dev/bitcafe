@@ -578,7 +578,7 @@ footer.site-foot::before{
 
 .cup-stage{ display:flex; justify-content:center; margin-bottom: var(--space-4); }
 .pixel-cup{
-  width:168px; height:168px;
+  width:256px; height:256px;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }

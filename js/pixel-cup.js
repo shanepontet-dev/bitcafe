@@ -1,150 +1,77 @@
-// bit cafe: the pixel cup. a hand-mapped 28x28 sprite, drawn on canvas,
-// in the house ink/paper/red palette (no new colors: see DESIGN.md's
-// Two-Ink Rule). plain script, not a module: exposes window.PixelCup.
+// bit cafe: the pixel cup. a 9-frame hand-authored pixel-art sprite
+// (img/coffee/cup-1.png … cup-9.png, full color, steam looping) swapped
+// on an <img> — not canvas-drawn. this is a deliberate, documented
+// exception to the house Two-Ink Rule (see DESIGN.md's Pixel Cup entry):
+// one illustrated asset, not a precedent for adding color elsewhere.
+// plain script, not a module: exposes window.PixelCup.
 (function () {
   "use strict";
 
-  var COLS = 28, ROWS = 28, CELL = 6; // 168x168 logical canvas
-
-  var INK = "#201f19";
+  var FRAME_COUNT = 9;
+  var FRAME_MS = 120; // ~1.1s per steam loop
+  var SIZE = 256;
   var PAPER = "#eef1e5";
-  var RED = "#b31f28";
-  var STEAM = "#b9bba4";
+  var REDUCED_FRAME = 5; // cup-5: a settled mid-steam pose for reduced motion
 
-  // ---- static cup mask ----------------------------------------------
-  // the body is a rounded-rect stair-stepped at the bottom (classic
-  // pixel-art corner rounding), a rectangular loop handle flush to the
-  // right wall, and a two-step flat saucer.
-  function bodyRowRange(row) {
-    if (row >= 8 && row <= 17) return [6, 21];
-    if (row === 18) return [7, 20];
-    if (row === 19) return [8, 19];
-    if (row === 20) return [9, 18];
-    return null;
+  function frameSrc(n) { return "img/coffee/cup-" + n + ".png"; }
+
+  // frame Image objects, loaded once and reused by both the live <img>
+  // swap and the export canvas (so export never re-fetches).
+  var images = null;
+  function loadImages() {
+    if (images) return images;
+    images = [];
+    for (var i = 1; i <= FRAME_COUNT; i++) {
+      var img = new Image();
+      img.src = frameSrc(i);
+      images.push(img);
+    }
+    return images;
   }
 
-  function cellKind(col, row) {
-    var range = bodyRowRange(row);
-    if (range) {
-      var lo = range[0], hi = range[1];
-      if (col >= lo && col <= hi) {
-        if (row === 8 || row === 20) return "k"; // rim + floor, fully outlined
-        if (col === lo || col === hi) return "k"; // walls
-        return "i"; // interior: paper or fill
-      }
-    }
-    if (col >= 21 && col <= 24 && row >= 12 && row <= 16) {
-      var inner = col >= 22 && col <= 23 && row >= 13 && row <= 15;
-      if (!inner) return "h";
-    }
-    if (row === 21 && col >= 7 && col <= 20) return "s";
-    if (row === 22 && col >= 4 && col <= 23) return "s";
-    return null;
-  }
-
-  // interior rows, bottom-first, for the liquid level
-  var INTERIOR_ROWS = [19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9];
-
-  function isFilled(col, row, progress) {
-    var idx = INTERIOR_ROWS.indexOf(row);
-    if (idx === -1) return false;
-    var filledCount = Math.round(progress * INTERIOR_ROWS.length);
-    return idx < filledCount;
-  }
-
-  // ---- one renderer instance = its own steam particles ----------------
-  // kept per-instance so the live on-page cup and an export capture never
-  // fight over the same particle state.
-  function createRenderer() {
-    var particles = [];
-    var lastSpawn = -Infinity;
-    var ORIGIN_COLS = [11, 13, 16, 18];
-
-    function spawn(now) {
-      var gx = ORIGIN_COLS[Math.floor(Math.random() * ORIGIN_COLS.length)] + (Math.random() - 0.5);
-      particles.push({ gx: gx, born: now, driftSeed: Math.random() * 10 });
-    }
-
-    function update(now, reduced) {
-      if (reduced) return;
-      if (now - lastSpawn > 260) { spawn(now); lastSpawn = now; }
-      particles = particles.filter(function (p) { return now - p.born < 1800; });
-      particles.forEach(function (p) {
-        p.gx += Math.sin((now - p.born) / 220 + p.driftSeed) * 0.02;
+  function whenReady(imgs) {
+    return Promise.all(imgs.map(function (img) {
+      if (img.complete) return Promise.resolve();
+      return new Promise(function (resolve) {
+        img.addEventListener("load", resolve, { once: true });
+        img.addEventListener("error", resolve, { once: true });
       });
-    }
-
-    function drawSteam(ctx, now, reduced) {
-      ctx.fillStyle = STEAM;
-      if (reduced) {
-        [[11, 5], [13, 3], [16, 4], [18, 6]].forEach(function (p) {
-          ctx.globalAlpha = 0.6;
-          ctx.fillRect(p[0] * CELL, p[1] * CELL, CELL, CELL);
-        });
-        ctx.globalAlpha = 1;
-        return;
-      }
-      particles.forEach(function (p) {
-        var age = (now - p.born) / 1800;
-        var gy = 7.5 - age * 7.5;
-        ctx.globalAlpha = Math.max(0, 1 - age) * 0.8;
-        ctx.fillRect(Math.round(p.gx) * CELL, Math.round(gy) * CELL, CELL, CELL);
-      });
-      ctx.globalAlpha = 1;
-    }
-
-    function draw(ctx, progress, now, reduced, bg) {
-      ctx.clearRect(0, 0, COLS * CELL, ROWS * CELL);
-      if (bg) {
-        ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, COLS * CELL, ROWS * CELL);
-      }
-      for (var row = 0; row < ROWS; row++) {
-        for (var col = 0; col < COLS; col++) {
-          var kind = cellKind(col, row);
-          if (!kind) continue;
-          ctx.fillStyle = kind === "i" ? (isFilled(col, row, progress) ? RED : PAPER) : INK;
-          ctx.fillRect(col * CELL, row * CELL, CELL, CELL);
-        }
-      }
-      drawSteam(ctx, now, reduced);
-    }
-
-    return {
-      update: update,
-      draw: draw,
-      reset: function () { particles = []; lastSpawn = -Infinity; },
-    };
+    }));
   }
 
   // ---- the live, on-page cup -------------------------------------------
-  var live = createRenderer();
-  var mountedCtx = null, currentProgress = 0, rafId = null, reducedMotion = false;
+  var mountedImg = null, frameIndex = 0, timerId = null, reducedMotion = false;
 
-  function loop(now) {
-    live.update(now, reducedMotion);
-    live.draw(mountedCtx, currentProgress, now, reducedMotion, null);
-    rafId = requestAnimationFrame(loop);
+  function showFrame(n) {
+    frameIndex = n;
+    if (mountedImg) mountedImg.src = frameSrc(n);
   }
 
-  function mount(canvas) {
-    mountedCtx = canvas.getContext("2d");
+  function tick() {
+    var next = (frameIndex % FRAME_COUNT) + 1;
+    showFrame(next);
+    timerId = setTimeout(tick, FRAME_MS);
+  }
+
+  function mount(imgEl) {
+    mountedImg = imgEl;
+    loadImages();
     reducedMotion = !!(window.bitcafe && window.bitcafe.prefersReducedMotion);
-    live.reset();
-    if (rafId) cancelAnimationFrame(rafId);
+    if (timerId) clearTimeout(timerId);
     if (reducedMotion) {
-      live.draw(mountedCtx, currentProgress, 0, true, null);
+      showFrame(REDUCED_FRAME);
     } else {
-      rafId = requestAnimationFrame(loop);
+      showFrame(1);
+      timerId = setTimeout(tick, FRAME_MS);
     }
   }
 
-  function setProgress(p) {
-    currentProgress = Math.max(0, Math.min(1, p));
-    if (reducedMotion && mountedCtx) live.draw(mountedCtx, currentProgress, 0, true, null);
-  }
+  // the sprite has no empty/full states (it's always a finished, steaming
+  // cup), so brew progress is carried entirely by the status line and the
+  // brew bar now. kept as a no-op so coffee.js's existing calls stay harmless.
+  function setProgress() {}
 
-  // ---- export: jpeg (one static frame, opaque paper backing) -----------
+  // ---- export: jpeg (current frame, opaque paper backing) --------------
   function download(url, filename) {
     var a = document.createElement("a");
     a.href = url;
@@ -155,18 +82,25 @@
   }
 
   function exportJPEG() {
-    var off = document.createElement("canvas");
-    off.width = COLS * CELL;
-    off.height = ROWS * CELL;
-    var snap = createRenderer();
-    snap.draw(off.getContext("2d"), currentProgress, performance.now(), true, PAPER);
-    download(off.toDataURL("image/jpeg", 0.92), "bitcafe-coffee.jpg");
+    var imgs = loadImages();
+    whenReady(imgs).then(function () {
+      var off = document.createElement("canvas");
+      off.width = off.height = SIZE;
+      var ctx = off.getContext("2d");
+      ctx.fillStyle = PAPER;
+      ctx.fillRect(0, 0, SIZE, SIZE);
+      ctx.drawImage(imgs[(reducedMotion ? REDUCED_FRAME : frameIndex) - 1], 0, 0, SIZE, SIZE);
+      download(off.toDataURL("image/jpeg", 0.92), "bitcafe-coffee.jpg");
+    });
   }
 
   // ---- export: animated gif (via gif.js, loaded on demand) -------------
   // gif.js (jnordberg/gif.js, MIT) is the one external script this site
   // loads: browsers have no built-in GIF encoder. it's fetched only the
-  // moment someone clicks "save as .gif", never on page load.
+  // moment someone clicks "save as .gif", never on page load. the frames
+  // themselves are just the same 9 authored PNGs, composited onto a paper
+  // backing — no synthetic capture loop needed now that the art already
+  // *is* the animation.
   var GIF_JS = "https://unpkg.com/gif.js@0.2.0/dist/gif.js";
   var GIF_WORKER = "https://unpkg.com/gif.js@0.2.0/dist/gif.worker.js";
   var gifScriptPromise = null;
@@ -202,46 +136,38 @@
     if (!gifScriptPromise) gifScriptPromise = loadScript(GIF_JS);
     say("loading the gif encoder…");
 
-    return Promise.all([gifScriptPromise, getGifWorkerBlobUrl()]).then(function (results) {
+    var imgs = loadImages();
+    return Promise.all([gifScriptPromise, getGifWorkerBlobUrl(), whenReady(imgs)]).then(function (results) {
       var workerBlobUrl = results[1];
       say("capturing frames…");
       return new Promise(function (resolve, reject) {
         var gif = new window.GIF({
           workers: 2,
           quality: 10,
-          width: COLS * CELL,
-          height: ROWS * CELL,
+          width: SIZE,
+          height: SIZE,
           workerScript: workerBlobUrl,
         });
 
         var off = document.createElement("canvas");
-        off.width = COLS * CELL;
-        off.height = ROWS * CELL;
+        off.width = off.height = SIZE;
         var octx = off.getContext("2d");
-        var capture = createRenderer();
 
-        var frames = 24, delay = 70, i = 0;
-        var start = performance.now();
+        imgs.forEach(function (img) {
+          octx.fillStyle = PAPER;
+          octx.fillRect(0, 0, SIZE, SIZE);
+          octx.drawImage(img, 0, 0, SIZE, SIZE);
+          gif.addFrame(octx, { copy: true, delay: FRAME_MS });
+        });
 
-        function step() {
-          var t = start + i * delay;
-          capture.update(t, false);
-          capture.draw(octx, currentProgress, t, false, PAPER);
-          gif.addFrame(octx, { copy: true, delay: delay });
-          i++;
-          if (i < frames) {
-            setTimeout(step, 0);
-          } else {
-            say("encoding the gif…");
-            gif.on("finished", function (blob) {
-              download(URL.createObjectURL(blob), "bitcafe-coffee.gif");
-              say("saved. check your downloads.");
-              resolve();
-            });
-            gif.render();
-          }
-        }
-        step();
+        say("encoding the gif…");
+        gif.on("finished", function (blob) {
+          download(URL.createObjectURL(blob), "bitcafe-coffee.gif");
+          say("saved. check your downloads.");
+          resolve();
+        });
+        gif.on("abort", function () { reject(new Error("gif render aborted")); });
+        gif.render();
       });
     }).catch(function (err) {
       console.error("bit cafe gif export failed:", err);
