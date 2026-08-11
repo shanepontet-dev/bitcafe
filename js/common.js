@@ -81,8 +81,8 @@
   // ---- bits: the house currency ---------------------------------------
   // earned by fishing (fishing.html), spent at the coffee counter
   // (coffee.html). one shared balance, kept in localStorage, rendered
-  // into the coin purse next to the "open" sign on every page. everyone
-  // who walks in starts with 10 — that seed only ever happens once.
+  // into the coin purse in the masthead on every page. everyone who
+  // walks in starts with 10 — that seed only ever happens once.
   var BITS_KEY = "bitcafe_bits";
   var STARTING_BITS = 10;
 

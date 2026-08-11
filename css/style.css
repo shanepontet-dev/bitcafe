@@ -124,14 +124,16 @@ button{ font-family:inherit; }
   padding-bottom: var(--space-3);
 }
 .brand{
-  display:flex; align-items:baseline; gap: var(--space-3);
+  display:flex; align-items:center; gap: var(--space-3);
   text-decoration:none; color:var(--ink);
 }
-.brand-mark{
-  font-family: var(--font-display); font-weight:800; font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  letter-spacing:-.02em;
+.brand-logo{
+  display:block;
+  height: clamp(34px, 26px + 2.4vw, 46px);
+  width:auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
-.brand-mark .dot{ color: var(--red); }
 .brand-tag{
   font-family: var(--font-body); font-style:italic; color: var(--ink-faint); font-size:.85rem;
   display:none;
@@ -151,25 +153,25 @@ button{ font-family:inherit; }
 .status-pill.is-live .led{ background: var(--teal); box-shadow: 0 0 0 2px rgba(16,107,92,.25); animation: pulse 1.6s ease-in-out infinite; }
 @keyframes pulse{ 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
 
-/* masthead-meta: groups the open sign with the coin purse so
-   masthead-bar's space-between still only has two things to split */
+/* masthead-meta: wraps whatever sits opposite the brand mark (just the
+   coin purse now) so masthead-bar's space-between still only has two
+   things to split */
 .masthead-meta{ display:flex; align-items:center; gap: var(--space-3); flex-wrap:wrap; }
 
 /* coin purse: the house currency, earned on fishing.html, spent on
-   coffee.html. lives right beside the open sign on every page. */
+   coffee.html. no pill/box chrome around it on purpose — just the coin
+   art and the count sitting plain in the masthead. */
 .coin-purse{
-  display:inline-flex; align-items:center; gap:.5em;
+  display:inline-flex; align-items:center; gap:.4em;
   font-family: var(--font-display); font-size:.72rem; letter-spacing:.04em;
-  padding: .4em .8em; border:2px solid var(--ink); color: var(--ink);
-  background: var(--paper); text-decoration:none;
-  transition: border-color .15s ease, color .15s ease;
+  color: var(--ink); text-decoration:none;
+  transition: color .15s ease;
 }
-.coin-purse:hover{ border-color: var(--red); color: var(--red); }
+.coin-purse:hover{ color: var(--red); }
 .coin-purse .coin{
-  width:.85em; height:.85em; border-radius:50%; flex:none;
-  border:1.5px solid currentColor;
-  background: var(--paper-2);
-  box-shadow: inset 0 0 0 1.5px var(--paper);
+  width:1.3em; height:1.3em; flex:none;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 .coin-purse.is-bumped .coin{ animation: coin-bump .5s ease; }
 @keyframes coin-bump{ 0%{ transform:scale(1) } 40%{ transform:scale(1.5) } 100%{ transform:scale(1) } }
@@ -280,6 +282,17 @@ nav.primary-nav a[aria-current="page"]::before{ content:"» "; color: var(--red)
   color: var(--ink-soft); font-size: 1.05rem;
   max-width: 52ch;
 }
+/* site-tagline: "an internet café for the terminally online", printed
+   above each page's own counter-intro line instead of living in the
+   masthead. same face and size as counter-intro on purpose (one voice,
+   two lines) -- ink-faint instead of ink-soft is the only difference,
+   so the site-wide line reads a half-step quieter than the page's own. */
+.site-tagline{
+  font-family: var(--font-body); font-style: italic;
+  color: var(--ink-faint); font-size: 1.05rem;
+  max-width: 52ch;
+  margin: 0 0 .35em;
+}
 /* fletcher, pinned above the order-board ticket -- decorative only (he's
    introduced properly, with real alt text, down in the about-counter
    ticket), so both copies below are aria-hidden. two different crops
@@ -318,7 +331,7 @@ nav.primary-nav a[aria-current="page"]::before{ content:"» "; color: var(--red)
   }
   /* reserve room for .hero-photo-desktop (max 12rem wide + margin) so
      the intro line never wraps underneath it */
-  .counter-intro{ max-width: min(52ch, 100% - 13.5rem); }
+  .counter-intro, .site-tagline{ max-width: min(52ch, 100% - 13.5rem); }
 }
 .ticket-close{ margin-top: var(--space-5); }
 
