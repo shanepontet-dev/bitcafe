@@ -91,7 +91,7 @@ The palette stays a single committed light world: pale, cool, faintly green dot-
 The palette reads as thermal receipt paper and its two inks: everything else is a tint or a line weight, never a third hue.
 
 ### Primary
-- **Duplicate-Ribbon Red** (`#b31f28`): the till's red ribbon. Used for primary CTAs, live/active states, prices, the "OPEN" status LED, and the pull-quote/stamp accents on articles. Never used for body text at length.
+- **Duplicate-Ribbon Red** (`#b31f28`): the till's red ribbon. Used for primary CTAs, live/active states, prices, the chatroom's connection-status LED (red while connecting, teal once live), and the pull-quote/stamp accents on articles. Never used for body text at length.
 
 ### Secondary
 - **Rubber-Stamp Teal** (`#106b5c`): the second ink in the till, reserved for confirmation and secondary-action moments — "paid" stamps, secondary buttons, chat handles, guestbook accent stamps. Keeps red singular as the "act now" color.
